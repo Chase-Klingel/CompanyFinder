@@ -30,35 +30,21 @@ class CompaniesController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
         
-        setupNavigationStyle()
-    }
-    
-    // MARK: - Display Navigation Items
-    
-    private func setupNavigationStyle() {
+        buildNavBar()
         
-
-        navigationController?.navigationBar.isTranslucent = false
-        
-        navigationController?.navigationBar.barTintColor = .lightRed
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        // handles small title text
-        navigationController?.navigationBar.titleTextAttributes =
-            [NSAttributedStringKey.foregroundColor: UIColor.white]
-        
-        navigationController?.navigationBar.largeTitleTextAttributes =
-            [NSAttributedStringKey.foregroundColor: UIColor.white]
-        
+        // controller specific nav action
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),
                             style: .plain, target: self, action: #selector(handleAddCompany))
-        
     }
     
+    // MARK: - Handle Add Company
+    
     @objc private func handleAddCompany() {
-        print("adding company")
+        let createCompaniesController = CreateCompanyController()        
+        let navController = UINavigationController(rootViewController: createCompaniesController)
+        
+        present(navController, animated: true, completion: nil)
     }
     
     // MARK: - Table View Header
