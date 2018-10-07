@@ -29,9 +29,7 @@ class CompaniesController: UITableViewController {
         tableView.separatorColor = .white
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
-        
-        buildNavBar()
-        
+                
         // controller specific nav action
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),

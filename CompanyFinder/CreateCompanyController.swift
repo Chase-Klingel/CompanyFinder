@@ -13,7 +13,5 @@ class CreateCompanyController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .darkBlue
-        
-        buildNavBar()
     }
 }
