@@ -40,7 +40,7 @@ class CompaniesController: UITableViewController {
     
     @objc private func handleAddCompany() {
         let createCompaniesController = CreateCompanyController()        
-        let navController = UINavigationController(rootViewController: createCompaniesController)
+        let navController = CustomNavigationController(rootViewController: createCompaniesController)
         
         present(navController, animated: true, completion: nil)
     }

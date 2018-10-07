@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Nav Bar Defaults
+        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barTintColor = .lightRed
         UINavigationBar.appearance().prefersLargeTitles = true
