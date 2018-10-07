@@ -8,12 +8,13 @@
 
 import UIKit
 
-class CompaniesController: UITableViewController {
+class CompaniesController: UITableViewController,
+CreateCompanyControllerDelegate {
     
     // MARK: - Instance Variables
     
     private let cellId = "cellId"
-    private let companies = [
+    private var companies = [
         Company(name: "Apple", founded: Date()),
         Company(name: "Google", founded: Date())
     ]
@@ -33,19 +34,28 @@ class CompaniesController: UITableViewController {
         // controller specific nav action
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),
-                            style: .plain, target: self, action: #selector(handleAddCompany))
+                            style: .plain, target: self, action: #selector(presentAddCompanyController))
     }
     
-    // MARK: - Handle Add Company
+    // MARK: - Add Company
     
-    @objc private func handleAddCompany() {
-        let createCompaniesController = CreateCompanyController()        
-        let navController = CustomNavigationController(rootViewController: createCompaniesController)
-        
+    func didAddCompany(company: Company) {
+        companies.append(company)
+        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    // MARK: - Present Add Company Controller
+    
+    @objc private func presentAddCompanyController() {
+        let createCompanyController = CreateCompanyController()
+        let navController = CustomNavigationController(rootViewController: createCompanyController)
+        createCompanyController.delegate = self
+
         present(navController, animated: true, completion: nil)
     }
     
-    // MARK: - Table View Header
+    // MARK: - Table View Header Style
     
     override func tableView(_ tableView: UITableView,
                             viewForHeaderInSection section: Int) -> UIView? {
