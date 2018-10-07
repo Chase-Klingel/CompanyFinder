@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		65D8E0E42169CBF0002906AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8E0E32169CBF0002906AA /* AppDelegate.swift */; };
-		65D8E0E62169CBF0002906AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8E0E52169CBF0002906AA /* ViewController.swift */; };
+		65D8E0E62169CBF0002906AA /* CompaniesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8E0E52169CBF0002906AA /* CompaniesController.swift */; };
 		65D8E0E92169CBF0002906AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D8E0E72169CBF0002906AA /* Main.storyboard */; };
 		65D8E0EB2169CBF2002906AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65D8E0EA2169CBF2002906AA /* Assets.xcassets */; };
 		65D8E0EE2169CBF2002906AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D8E0EC2169CBF2002906AA /* LaunchScreen.storyboard */; };
 		65D8E0F6216A7737002906AA /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8E0F5216A7737002906AA /* UIColor+theme.swift */; };
+		65D8E0FA216A7D04002906AA /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8E0F9216A7D04002906AA /* Company.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		65D8E0E02169CBF0002906AA /* CompanyFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompanyFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D8E0E32169CBF0002906AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		65D8E0E52169CBF0002906AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		65D8E0E52169CBF0002906AA /* CompaniesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesController.swift; sourceTree = "<group>"; };
 		65D8E0E82169CBF0002906AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65D8E0EA2169CBF2002906AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65D8E0ED2169CBF2002906AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65D8E0EF2169CBF2002906AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65D8E0F5216A7737002906AA /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
+		65D8E0F9216A7D04002906AA /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +58,9 @@
 		65D8E0E22169CBF0002906AA /* CompanyFinder */ = {
 			isa = PBXGroup;
 			children = (
+				65D8E0FB216A829C002906AA /* Model */,
 				65D8E0E32169CBF0002906AA /* AppDelegate.swift */,
-				65D8E0E52169CBF0002906AA /* ViewController.swift */,
+				65D8E0E52169CBF0002906AA /* CompaniesController.swift */,
 				65D8E0E72169CBF0002906AA /* Main.storyboard */,
 				65D8E0EA2169CBF2002906AA /* Assets.xcassets */,
 				65D8E0EC2169CBF2002906AA /* LaunchScreen.storyboard */,
@@ -65,6 +68,14 @@
 				65D8E0F5216A7737002906AA /* UIColor+theme.swift */,
 			);
 			path = CompanyFinder;
+			sourceTree = "<group>";
+		};
+		65D8E0FB216A829C002906AA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				65D8E0F9216A7D04002906AA /* Company.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +150,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D8E0F6216A7737002906AA /* UIColor+theme.swift in Sources */,
-				65D8E0E62169CBF0002906AA /* ViewController.swift in Sources */,
+				65D8E0E62169CBF0002906AA /* CompaniesController.swift in Sources */,
 				65D8E0E42169CBF0002906AA /* AppDelegate.swift in Sources */,
+				65D8E0FA216A7D04002906AA /* Company.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
