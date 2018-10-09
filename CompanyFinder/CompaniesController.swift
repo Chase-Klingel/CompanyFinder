@@ -17,10 +17,9 @@ CreateCompanyControllerDelegate {
     private let cellId = "cellId"
     private var companies = [Company]()
     
-    // MARK: - View Did Load
+    // MARK: - Fetch Companies
     
     func fetchCompanies() {
-
         let context =
             CoreDataManager.shared.persistentContainer.viewContext
         
@@ -35,8 +34,9 @@ CreateCompanyControllerDelegate {
         } catch let fetchErr {
             print("Failed to fetch companies: \(fetchErr)")
         }
-        
     }
+    
+    // MARK: - View Did Load
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +109,29 @@ CreateCompanyControllerDelegate {
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         
         return cell
+    }
+    
+    // MARK: - Table View Delete/Edit Action
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
+            let company = self.companies[indexPath.row]
+            
+            self.companies.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let context = CoreDataManager.shared.persistentContainer.viewContext
+            
+            context.delete(company)
+            
+            do {
+                try context.save()
+            } catch let saveErr {
+                print("Failed to delete company: \(saveErr)")
+            }
+        }
+        
+        return [deleteAction]
     }
 }
 
