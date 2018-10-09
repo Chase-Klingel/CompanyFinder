@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol CreateCompanyControllerDelegate {
     func didAddCompany(company: Company)
@@ -41,10 +42,12 @@ class CreateCompanyController: UIViewController {
         view.backgroundColor = .darkBlue
         navigationController?.title = "Create Company"
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain,
-                                                           target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain,
-                                                            target: self, action: #selector(handleSave))
+        navigationItem.leftBarButtonItem =
+            UIBarButtonItem(title: "Cancel", style: .plain,
+                            target: self, action: #selector(handleCancel))
+        navigationItem.rightBarButtonItem =
+            UIBarButtonItem(title: "Save", style: .plain,
+                            target: self, action: #selector(handleSave))
         setupUI()
     }
     
@@ -56,11 +59,22 @@ class CreateCompanyController: UIViewController {
     
     @objc private func handleSave() {
         print("handling save...")
+
+        let context =
+            CoreDataManager.shared.persistentContainer.viewContext
         
-        dismiss(animated: true) {
-            guard let name = self.nameTextField.text else { return }
-            let company = Company(name: name, founded: Date())
-            self.delegate?.didAddCompany(company: company)
+        let company =
+            NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
+        
+        company.setValue(nameTextField.text, forKey: "name")
+        
+        do {
+            try context.save()
+            dismiss(animated: true) {
+                self.delegate?.didAddCompany(company: company as! Company)
+            }
+        } catch let saveErr {
+            print("Failed to save company: \(saveErr)")
         }
     }
     
@@ -75,14 +89,23 @@ class CreateCompanyController: UIViewController {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .lightBlue
         view.addSubview(backgroundView)
-        backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor,
+                              bottom: nil, trailing: view.trailingAnchor, paddingTop: 0,
+                              paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                              width: 0, height: 50)
     }
     
     private func addNameLabelAndTextField() {
         view.addSubview(nameLabel)
-        nameLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 100, height: 50)
+        nameLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor,
+                         bottom: nil, trailing: nil, paddingTop: 0,
+                         paddingLeft: 16, paddingBottom: 0, paddingRight: 0,
+                         width: 100, height: 50)
         
         view.addSubview(nameTextField)
-        nameTextField.anchor(top: nameLabel.topAnchor, leading: nameLabel.trailingAnchor, bottom: nameLabel.bottomAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        nameTextField.anchor(top: nameLabel.topAnchor, leading: nameLabel.trailingAnchor,
+                             bottom: nameLabel.bottomAnchor, trailing: view.trailingAnchor,
+                             paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                             width: 0, height: 0)
     }
 }

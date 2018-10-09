@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CompaniesController: UITableViewController,
 CreateCompanyControllerDelegate {
@@ -14,27 +15,47 @@ CreateCompanyControllerDelegate {
     // MARK: - Instance Variables
     
     private let cellId = "cellId"
-    private var companies = [
-        Company(name: "Apple", founded: Date()),
-        Company(name: "Google", founded: Date())
-    ]
+    private var companies = [Company]()
     
     // MARK: - View Did Load
     
+    func fetchCompanies() {
+
+        let context =
+            CoreDataManager.shared.persistentContainer.viewContext
+        
+        let fetchRequest =
+            NSFetchRequest<Company>(entityName: "Company")
+        
+        do {
+            let companies = try context.fetch(fetchRequest)
+            
+            self.companies = companies
+            self.tableView.reloadData()
+        } catch let fetchErr {
+            print("Failed to fetch companies: \(fetchErr)")
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchCompanies()
         
         view.backgroundColor = .white
         navigationItem.title = "Companies"
         tableView.backgroundColor = .darkBlue
         tableView.separatorColor = .white
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UITableViewCell.self,
+                           forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
                 
         // controller specific nav action
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),
-                            style: .plain, target: self, action: #selector(presentAddCompanyController))
+                            style: .plain, target: self,
+                            action: #selector(presentAddCompanyController))
     }
     
     // MARK: - Add Company
