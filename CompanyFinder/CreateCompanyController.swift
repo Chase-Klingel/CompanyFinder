@@ -11,9 +11,18 @@ import CoreData
 
 protocol CreateCompanyControllerDelegate {
     func didAddCompany(company: Company)
+    func didEditCompany(company: Company)
 }
 
 class CreateCompanyController: UIViewController {
+    
+    //MARK: - Instance Variables
+    
+    var company: Company? {
+        didSet {
+            nameTextField.text = company?.name
+        }
+    }
     
     // MARK: - Delegate Assignment
     
@@ -35,12 +44,22 @@ class CreateCompanyController: UIViewController {
         return textField
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if company == nil {
+            navigationItem.title = "Create Company"
+        } else {
+            navigationItem.title = "Edit Company"
+        }
+    }
+    
     // MARK: - View Did Load
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .darkBlue
-        navigationController?.title = "Create Company"
         
         navigationItem.leftBarButtonItem =
             UIBarButtonItem(title: "Cancel", style: .plain,
@@ -58,14 +77,20 @@ class CreateCompanyController: UIViewController {
     }
     
     @objc private func handleSave() {
-        print("handling save...")
-
+        if company == nil {
+            createCompany()
+        } else {
+            updateCompany()
+        }
+    }
+    
+    private func createCompany() {
         let context =
             CoreDataManager.shared.persistentContainer.viewContext
         
         let company =
-            NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
-        
+            NSEntityDescription.insertNewObject(forEntityName: "Company",
+                                                into: context)
         company.setValue(nameTextField.text, forKey: "name")
         
         do {
@@ -73,9 +98,26 @@ class CreateCompanyController: UIViewController {
             dismiss(animated: true) {
                 self.delegate?.didAddCompany(company: company as! Company)
             }
-        } catch let saveErr {
-            print("Failed to save company: \(saveErr)")
+        } catch let err {
+            print("Failed to save new company: \(err)")
         }
+    }
+    
+    private func updateCompany() {
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        
+        company?.name = nameTextField.text
+        
+        do {
+            try context.save()
+            dismiss(animated: true) {
+               self.delegate?.didEditCompany(company: self.company!)
+            }
+        } catch let err {
+            print("Failed to update company name: \(err)")
+        }
+        
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Position UI Elements
@@ -90,22 +132,25 @@ class CreateCompanyController: UIViewController {
         backgroundView.backgroundColor = .lightBlue
         view.addSubview(backgroundView)
         backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor,
-                              bottom: nil, trailing: view.trailingAnchor, paddingTop: 0,
-                              paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                              bottom: nil, trailing: view.trailingAnchor,
+                              paddingTop: 0, paddingLeft: 0,
+                              paddingBottom: 0, paddingRight: 0,
                               width: 0, height: 50)
     }
     
     private func addNameLabelAndTextField() {
         view.addSubview(nameLabel)
         nameLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor,
-                         bottom: nil, trailing: nil, paddingTop: 0,
-                         paddingLeft: 16, paddingBottom: 0, paddingRight: 0,
+                         bottom: nil, trailing: nil,
+                         paddingTop: 0, paddingLeft: 16,
+                         paddingBottom: 0, paddingRight: 0,
                          width: 100, height: 50)
         
         view.addSubview(nameTextField)
         nameTextField.anchor(top: nameLabel.topAnchor, leading: nameLabel.trailingAnchor,
                              bottom: nameLabel.bottomAnchor, trailing: view.trailingAnchor,
-                             paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                             paddingTop: 0, paddingLeft: 0,
+                             paddingBottom: 0, paddingRight: 0,
                              width: 0, height: 0)
     }
 }

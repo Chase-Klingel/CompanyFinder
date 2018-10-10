@@ -11,7 +11,7 @@ import CoreData
 
 class CompaniesController: UITableViewController,
 CreateCompanyControllerDelegate {
-    
+   
     // MARK: - Instance Variables
     
     private let cellId = "cellId"
@@ -58,12 +58,23 @@ CreateCompanyControllerDelegate {
                             action: #selector(presentAddCompanyController))
     }
     
-    // MARK: - Add Company
+    // MARK: - Add/Edit Company
     
     func didAddCompany(company: Company) {
         companies.append(company)
-        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+        let newIndexPath =
+            IndexPath(row: companies.count - 1, section: 0)
+        
         tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    func didEditCompany(company: Company) {
+        guard let row = companies.index(of: company)
+            else { return }
+        
+        let indexPath = IndexPath(row: row, section: 0)
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     // MARK: - Present Add Company Controller
@@ -76,62 +87,92 @@ CreateCompanyControllerDelegate {
         present(navController, animated: true, completion: nil)
     }
     
-    // MARK: - Table View Header Style
-    
-    override func tableView(_ tableView: UITableView,
-                            viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .lightBlue
-        
-        return view
-    }
-    
-    override func tableView(_ tableView: UITableView,
-                            heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
     // MARK: - Table View Data Source Methods
     
     override func tableView(_ tableView: UITableView,
-                            numberOfRowsInSection section: Int) -> Int {
-        return companies.count
+                            numberOfRowsInSection section: Int)
+        -> Int {
+            return companies.count
     }
     
     override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        let company = companies[indexPath.row]
+                            cellForRowAt indexPath: IndexPath)
         
-        cell.backgroundColor = .tealColor
-        cell.textLabel?.text = company.name
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        
-        return cell
+        -> UITableViewCell {
+            
+            let cell =
+                tableView.dequeueReusableCell(withIdentifier: cellId,
+                                              for: indexPath)
+            let company = companies[indexPath.row]
+            
+            cell.backgroundColor = .tealColor
+            cell.textLabel?.text = company.name
+            cell.textLabel?.textColor = .white
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+            
+            return cell
+    }
+    
+    // MARK: - Table View Header Style
+    
+    override func tableView(_ tableView: UITableView,
+                            heightForHeaderInSection section: Int)
+        -> CGFloat {
+            
+        return 50
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            viewForHeaderInSection section: Int)
+        -> UIView? {
+            
+            let view = UIView()
+            view.backgroundColor = .lightBlue
+            
+            return view
     }
     
     // MARK: - Table View Delete/Edit Action
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
-            let company = self.companies[indexPath.row]
+    override func tableView(_ tableView: UITableView,
+                            editActionsForRowAt indexPath: IndexPath)
+        -> [UITableViewRowAction]? {
             
-            self.companies.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            let context = CoreDataManager.shared.persistentContainer.viewContext
-            
-            context.delete(company)
-            
-            do {
-                try context.save()
-            } catch let saveErr {
-                print("Failed to delete company: \(saveErr)")
-            }
-        }
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete",
+                                                handler: deleteHandler)
         
-        return [deleteAction]
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit",
+                                              handler: editHandler)
+        
+        return [deleteAction, editAction]
+    }
+    
+    private func deleteHandler(action: UITableViewRowAction,
+                               indexPath: IndexPath) {
+        let company = self.companies[indexPath.row]
+        
+        self.companies.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+        
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        
+        context.delete(company)
+        
+        do {
+            try context.save()
+        } catch let saveErr {
+            print("Failed to delete company: \(saveErr)")
+        }
+    }
+    
+    private func editHandler(action: UITableViewRowAction,
+                             indexPath: IndexPath) {
+        let editCompanyController = CreateCompanyController()
+        editCompanyController.company = companies[indexPath.row]
+        editCompanyController.delegate = self
+        let navController = UINavigationController(rootViewController: editCompanyController)
+        
+        present(navController, animated: true, completion: nil)
     }
 }
 
