@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class CompaniesController: UITableViewController,
-CreateCompanyControllerDelegate {
+    CreateCompanyControllerDelegate {
    
     // MARK: - Instance Variables
     
@@ -140,10 +140,12 @@ CreateCompanyControllerDelegate {
             
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete",
                                                 handler: deleteHandler)
-        
+        deleteAction.backgroundColor = UIColor.lightRed
+            
         let editAction = UITableViewRowAction(style: .normal, title: "Edit",
                                               handler: editHandler)
-        
+        editAction.backgroundColor = UIColor.darkBlue
+            
         return [deleteAction, editAction]
     }
     
