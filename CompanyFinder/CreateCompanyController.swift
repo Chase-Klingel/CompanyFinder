@@ -21,6 +21,11 @@ class CreateCompanyController: UIViewController {
     var company: Company? {
         didSet {
             nameTextField.text = company?.name
+            
+            guard let founded = company?.founded
+                else { return }
+            
+            datePicker.date = founded
         }
     }
     
@@ -124,6 +129,7 @@ class CreateCompanyController: UIViewController {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         
         company?.name = nameTextField.text
+        company?.founded = datePicker.date
         
         do {
             try context.save()
