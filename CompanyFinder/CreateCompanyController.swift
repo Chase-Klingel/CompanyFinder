@@ -30,6 +30,13 @@ class CreateCompanyController: UIViewController {
     
     // MARK: - UI Elements
     
+    let backgroundView: UIView = {
+        let bv = UIView()
+        bv.backgroundColor = .lightBlue
+        
+        return bv
+    }()
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
@@ -43,6 +50,15 @@ class CreateCompanyController: UIViewController {
         
         return textField
     }()
+    
+    let datePicker: UIDatePicker = {
+        let dp = UIDatePicker()
+        dp.datePickerMode = .date
+        
+        return dp
+    }()
+    
+    // MARK: - View Will Appear
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -92,6 +108,7 @@ class CreateCompanyController: UIViewController {
             NSEntityDescription.insertNewObject(forEntityName: "Company",
                                                 into: context)
         company.setValue(nameTextField.text, forKey: "name")
+        company.setValue(datePicker.date, forKey: "founded")
         
         do {
             try context.save()
@@ -123,22 +140,21 @@ class CreateCompanyController: UIViewController {
     // MARK: - Position UI Elements
     
     private func setupUI() {
-        addBackgroundView()
-        addNameLabelAndTextField()
+        anchorBackgroundView()
+        anchorNameLabelAndTextField()
+        anchorDatePicker()
     }
     
-    private func addBackgroundView() {
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = .lightBlue
+    private func anchorBackgroundView() {
         view.addSubview(backgroundView)
         backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor,
                               bottom: nil, trailing: view.trailingAnchor,
                               paddingTop: 0, paddingLeft: 0,
                               paddingBottom: 0, paddingRight: 0,
-                              width: 0, height: 50)
+                              width: 0, height: 250)
     }
     
-    private func addNameLabelAndTextField() {
+    private func anchorNameLabelAndTextField() {
         view.addSubview(nameLabel)
         nameLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor,
                          bottom: nil, trailing: nil,
@@ -152,5 +168,14 @@ class CreateCompanyController: UIViewController {
                              paddingTop: 0, paddingLeft: 0,
                              paddingBottom: 0, paddingRight: 0,
                              width: 0, height: 0)
+    }
+    
+    private func anchorDatePicker() {
+        view.addSubview(datePicker)
+        datePicker.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor,
+                          bottom: backgroundView.bottomAnchor, trailing: view.trailingAnchor,
+                          paddingTop: 0, paddingLeft: 0,
+                          paddingBottom: 0, paddingRight: 0,
+                          width: 0, height: 0)
     }
 }
