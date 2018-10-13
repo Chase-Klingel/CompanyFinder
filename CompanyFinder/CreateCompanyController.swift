@@ -9,12 +9,16 @@
 import UIKit
 import CoreData
 
+// MARK: - Protocols
+
 protocol CreateCompanyControllerDelegate {
     func didAddCompany(company: Company)
     func didEditCompany(company: Company)
 }
 
-class CreateCompanyController: UIViewController {
+class CreateCompanyController: UIViewController,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate {
     
     //MARK: - Instance Variables
     
@@ -42,6 +46,18 @@ class CreateCompanyController: UIViewController {
         return bv
     }()
     
+    lazy var companyImageView: UIImageView = {
+        let iv =
+            UIImageView(image: #imageLiteral(resourceName: "select_photo_empty").withRenderingMode(.alwaysOriginal))
+        let tapGesture =
+            UITapGestureRecognizer(target: self,
+                                   action: #selector(handlePresentPhotoSelector))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(tapGesture)
+
+        return iv
+    }()
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
@@ -62,6 +78,38 @@ class CreateCompanyController: UIViewController {
         
         return dp
     }()
+    
+    // MARK: - Present UIImagePickerController
+    
+    @objc func handlePresentPhotoSelector() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Select Photo/Dismiss UIImagePickerController
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let editedImage =
+            info[UIImagePickerControllerEditedImage] as? UIImage {
+            
+            companyImageView.image = editedImage
+            
+        } else if let originalImage =
+            info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            companyImageView.image = originalImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     // MARK: - View Will Appear
     
@@ -107,7 +155,8 @@ class CreateCompanyController: UIViewController {
     
     private func createCompany() {
         let context =
-            CoreDataManager.shared.persistentContainer.viewContext
+            CoreDataManager.shared
+                .persistentContainer.viewContext
         
         let company =
             NSEntityDescription.insertNewObject(forEntityName: "Company",
@@ -126,7 +175,9 @@ class CreateCompanyController: UIViewController {
     }
     
     private func updateCompany() {
-        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let context =
+            CoreDataManager.shared
+                .persistentContainer.viewContext
         
         company?.name = nameTextField.text
         company?.founded = datePicker.date
@@ -147,6 +198,7 @@ class CreateCompanyController: UIViewController {
     
     private func setupUI() {
         anchorBackgroundView()
+        anchorCompanyImageView()
         anchorNameLabelAndTextField()
         anchorDatePicker()
     }
@@ -157,12 +209,22 @@ class CreateCompanyController: UIViewController {
                               bottom: nil, trailing: view.trailingAnchor,
                               paddingTop: 0, paddingLeft: 0,
                               paddingBottom: 0, paddingRight: 0,
-                              width: 0, height: 250)
+                              width: 0, height: 350)
+    }
+    
+    private func anchorCompanyImageView() {
+        view.addSubview(companyImageView)
+        companyImageView.anchor(top: view.topAnchor, leading: nil,
+                                bottom: nil, trailing: nil,
+                                paddingTop: 8, paddingLeft: 0,
+                                paddingBottom: 0, paddingRight: 0,
+                                width: 100, height: 100)
+        companyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func anchorNameLabelAndTextField() {
         view.addSubview(nameLabel)
-        nameLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor,
+        nameLabel.anchor(top: companyImageView.bottomAnchor, leading: view.leadingAnchor,
                          bottom: nil, trailing: nil,
                          paddingTop: 0, paddingLeft: 16,
                          paddingBottom: 0, paddingRight: 0,
