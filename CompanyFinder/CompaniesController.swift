@@ -121,6 +121,12 @@ class CompaniesController: UITableViewController,
 
             cell.textLabel?.textColor = .white
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+
+            if let companyImage = company.companyImage {
+                cell.imageView?.image = UIImage(data: companyImage)
+            } else {
+                cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty").withRenderingMode(.alwaysOriginal)
+            }
             
             return cell
     }

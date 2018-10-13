@@ -26,10 +26,14 @@ class CreateCompanyController: UIViewController,
         didSet {
             nameTextField.text = company?.name
             
-            guard let founded = company?.founded
-                else { return }
+            if let founded = company?.founded {
+                datePicker.date = founded
+            }
             
-            datePicker.date = founded
+            if let companyImage = company?.companyImage {
+                let image = UIImage(data: companyImage, scale: 0.8)
+                companyImageView.image = image
+            }
         }
     }
     
@@ -52,9 +56,11 @@ class CreateCompanyController: UIViewController,
         let tapGesture =
             UITapGestureRecognizer(target: self,
                                    action: #selector(handlePresentPhotoSelector))
+        iv.contentMode = .scaleAspectFill
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(tapGesture)
-
+        iv.makeCirculor()
+        
         return iv
     }()
     
@@ -163,7 +169,11 @@ class CreateCompanyController: UIViewController,
                                                 into: context)
         company.setValue(nameTextField.text, forKey: "name")
         company.setValue(datePicker.date, forKey: "founded")
-        
+        if let companyImage = companyImageView.image {
+            let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
+            company.setValue(imageData, forKey: "companyImage")
+        }
+    
         do {
             try context.save()
             dismiss(animated: true) {
@@ -181,6 +191,10 @@ class CreateCompanyController: UIViewController,
         
         company?.name = nameTextField.text
         company?.founded = datePicker.date
+        
+        if let companyImage = companyImageView.image {
+            company?.companyImage = UIImageJPEGRepresentation(companyImage, 0.8)
+        }
         
         do {
             try context.save()
