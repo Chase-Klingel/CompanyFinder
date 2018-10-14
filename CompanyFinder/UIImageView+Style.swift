@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImageView {
     func makeCirculor() {
-        self.layer.cornerRadius = 10 / 2
+        self.layer.cornerRadius = self.frame.size.width / 2
         self.clipsToBounds = true
     }
 }

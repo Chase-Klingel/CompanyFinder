@@ -46,7 +46,7 @@ class CompaniesController: UITableViewController,
         navigationItem.title = "Companies"
         tableView.backgroundColor = .darkBlue
         tableView.separatorColor = .white
-        tableView.register(UITableViewCell.self,
+        tableView.register(CompanyCell.self,
                            forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
                 
@@ -127,42 +127,21 @@ class CompaniesController: UITableViewController,
             
         let cell =
         tableView.dequeueReusableCell(withIdentifier: cellId,
-                                              for: indexPath)
-        cell.backgroundColor = .tealColor
+                                              for: indexPath) as! CompanyCell
 
         let company = companies[indexPath.row]
+        cell.currentCompany = company
             
-        if let name = company.name, let founded = company.founded {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM dd, YYYY"
-            let foundedDate = dateFormatter.string(from: founded)
-            
-            let companyNameAndFoundedDate = "\(name) - Founded: \(foundedDate)"
-            
-            cell.textLabel?.text = companyNameAndFoundedDate
-        } else {
-            cell.textLabel?.text = company.name
-        }
-
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-
-        if let companyImage = company.companyImage {
-            cell.imageView?.image = UIImage(data: companyImage)
-        } else {
-            cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty").withRenderingMode(.alwaysOriginal)
-        }
-        
         return cell
     }
     
-    // MARK: - Table View Header Style
+    // MARK: - Table View Header
     
     override func tableView(_ tableView: UITableView,
                             heightForHeaderInSection section: Int)
         -> CGFloat {
             
-        return 50
+        return 60
     }
     
     override func tableView(_ tableView: UITableView,
@@ -175,6 +154,8 @@ class CompaniesController: UITableViewController,
         return view
     }
     
+    // MARK: - Table View Footer
+    
     override func tableView(_ tableView: UITableView,
                             viewForFooterInSection section: Int)
         -> UIView? {
@@ -186,6 +167,15 @@ class CompaniesController: UITableViewController,
         label.font = UIFont.boldSystemFont(ofSize: 16)
             
         return label
+    }
+    
+    // MARK: - Table View Style
+    
+    override func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath)
+        -> CGFloat {
+        
+        return 60
     }
     
     override func tableView(_ tableView: UITableView,
