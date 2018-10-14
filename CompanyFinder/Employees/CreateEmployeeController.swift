@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CreateEmployeeController: UIViewController {
     
@@ -55,7 +56,10 @@ class CreateEmployeeController: UIViewController {
     }
     
     @objc private func handleSave() {
-        // do stuff
+        guard let emmployeeName = nameTextField.text else { return }
+        CoreDataManager.shared.createEmployee(employeeName: emmployeeName)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     private func anchorNameLabelAndTextField() {
