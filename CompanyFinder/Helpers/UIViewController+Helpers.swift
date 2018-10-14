@@ -37,4 +37,19 @@ extension UIViewController {
                             target: self,
                             action: selector)
     }
+
+    func anchorBackgroundView(height: CGFloat) -> UIView {
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .lightBlue
+        
+        view.addSubview(backgroundView)
+        backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor,
+                              bottom: nil, trailing: view.trailingAnchor,
+                              paddingTop: 0, paddingLeft: 0,
+                              paddingBottom: 0, paddingRight: 0,
+                              width: 0, height: height)
+        
+        return backgroundView
+    }
+    
 }

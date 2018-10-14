@@ -46,13 +46,6 @@ class CreateCompanyController: UIViewController,
     
     // MARK: - UI Elements
     
-    let backgroundView: UIView = {
-        let bv = UIView()
-        bv.backgroundColor = .lightBlue
-        
-        return bv
-    }()
-    
     lazy var companyImageView: UIImageView = {
         let iv =
             UIImageView(image: #imageLiteral(resourceName: "select_photo_empty").withRenderingMode(.alwaysOriginal))
@@ -200,20 +193,12 @@ class CreateCompanyController: UIViewController,
     // MARK: - Position UI Elements
     
     private func setupUI() {
-        anchorBackgroundView()
+        let backgroundView = anchorBackgroundView(height: 350)
         anchorCompanyImageView()
         anchorNameLabelAndTextField()
-        anchorDatePicker()
+        anchorDatePicker(backgroundView: backgroundView)
     }
-    
-    private func anchorBackgroundView() {
-        view.addSubview(backgroundView)
-        backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor,
-                              bottom: nil, trailing: view.trailingAnchor,
-                              paddingTop: 0, paddingLeft: 0,
-                              paddingBottom: 0, paddingRight: 0,
-                              width: 0, height: 350)
-    }
+
     
     private func anchorCompanyImageView() {
         view.addSubview(companyImageView)
@@ -222,7 +207,8 @@ class CreateCompanyController: UIViewController,
                                 paddingTop: 8, paddingLeft: 0,
                                 paddingBottom: 0, paddingRight: 0,
                                 width: 100, height: 100)
-        companyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        companyImageView.centerXAnchor
+            .constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func anchorNameLabelAndTextField() {
@@ -239,11 +225,11 @@ class CreateCompanyController: UIViewController,
                              paddingTop: 0, paddingLeft: 0,
                              paddingBottom: 0, paddingRight: 0,
                              width: 0, height: 0)
-        nameTextField.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
-        
+        nameTextField.centerYAnchor
+            .constraint(equalTo: nameLabel.centerYAnchor).isActive = true
     }
     
-    private func anchorDatePicker() {
+    private func anchorDatePicker(backgroundView: UIView) {
         view.addSubview(datePicker)
         datePicker.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor,
                           bottom: backgroundView.bottomAnchor, trailing: view.trailingAnchor,

@@ -9,12 +9,6 @@
 import UIKit
 
 class CreateEmployeeController: UIViewController {
-    let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightBlue
-        
-        return view
-    }()
     
     let nameLabel: UILabel =  {
         let label = UILabel()
@@ -55,22 +49,13 @@ class CreateEmployeeController: UIViewController {
         setupCancelButton()
         setupSaveButtonInNavBar(selector: #selector(handleSave))
         
-        anchorBackgroundView()
+        _ = anchorBackgroundView(height: 50)
         anchorNameLabelAndTextField()
         anchorBirthLabelAndTextField()
     }
     
     @objc private func handleSave() {
-        print("blah")
-    }
-    
-    private func anchorBackgroundView() {
-        view.addSubview(backgroundView)
-        backgroundView.anchor(top: view.topAnchor, leading: view.leadingAnchor,
-                              bottom: nil, trailing: view.trailingAnchor,
-                              paddingTop: 0, paddingLeft: 0,
-                              paddingBottom: 0, paddingRight: 0,
-                              width: 0, height: 350)
+        // do stuff
     }
     
     private func anchorNameLabelAndTextField() {
