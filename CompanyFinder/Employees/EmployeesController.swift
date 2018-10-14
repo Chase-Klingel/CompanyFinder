@@ -9,12 +9,19 @@
 import UIKit
 
 class EmployeesController: UITableViewController {
+    
+    // MARK: - Instance Variables
+    
     var company: Company?
+    
+    // MARK: - View Will Appear
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = company?.name
     }
+    
+    // MARK: - View Did Load
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +30,13 @@ class EmployeesController: UITableViewController {
         setupPlusButtonInNavBar(selector: #selector(handleAddEmployee))
     }
     
+    // MARK: - Add Employee
+    
     @objc private func handleAddEmployee() {
-        print("hitting")
+        let creatEmployeeController = CreateEmployeeController()
+        let navController =
+            UINavigationController(rootViewController: creatEmployeeController)
+        
+        present(navController, animated: true, completion: nil)
     }
 }

@@ -17,4 +17,24 @@ extension UIViewController {
                             target: self,
                             action: selector)
     }
+    
+    func setupCancelButton() {
+        navigationItem.leftBarButtonItem =
+            UIBarButtonItem(title: "Cancel",
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleCancel))
+    }
+    
+    @objc func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func setupSaveButtonInNavBar(selector: Selector) {
+        navigationItem.rightBarButtonItem =
+            UIBarButtonItem(title: "Save",
+                            style: .plain,
+                            target: self,
+                            action: selector)
+    }
 }

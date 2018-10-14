@@ -70,6 +70,7 @@ class CreateCompanyController: UIViewController,
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         
         return label
     }()
@@ -139,20 +140,10 @@ class CreateCompanyController: UIViewController,
         
         view.backgroundColor = .darkBlue
         
-        navigationItem.leftBarButtonItem =
-            UIBarButtonItem(title: "Cancel", style: .plain,
-                            target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItem =
-            UIBarButtonItem(title: "Save", style: .plain,
-                            target: self, action: #selector(handleSave))
+        setupCancelButton()
+        setupSaveButtonInNavBar(selector: #selector(handleSave))
 
         setupUI()
-    }
-    
-    // MARK: - Dismiss Controller/Save Company Info
-    
-    @objc private func handleCancel() {
-        dismiss(animated: true, completion: nil)
     }
     
     @objc private func handleSave() {
@@ -240,14 +231,16 @@ class CreateCompanyController: UIViewController,
                          bottom: nil, trailing: nil,
                          paddingTop: 0, paddingLeft: 16,
                          paddingBottom: 0, paddingRight: 0,
-                         width: 100, height: 50)
+                         width: 50, height: 50)
         
         view.addSubview(nameTextField)
-        nameTextField.anchor(top: nameLabel.topAnchor, leading: nameLabel.trailingAnchor,
-                             bottom: nameLabel.bottomAnchor, trailing: view.trailingAnchor,
+        nameTextField.anchor(top: nil, leading: nameLabel.trailingAnchor,
+                             bottom: nil, trailing: view.trailingAnchor,
                              paddingTop: 0, paddingLeft: 0,
                              paddingBottom: 0, paddingRight: 0,
                              width: 0, height: 0)
+        nameTextField.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
+        
     }
     
     private func anchorDatePicker() {
