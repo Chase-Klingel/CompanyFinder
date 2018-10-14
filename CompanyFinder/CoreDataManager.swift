@@ -40,4 +40,41 @@ struct CoreDataManager {
         }
     }
     
+    
+    // MARK: - Reset
+    func deleteAllCompanies() {
+        let context = persistentContainer.viewContext
+        
+        let batchDeleteRequest =
+            NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        
+        do {
+            try context.execute(batchDeleteRequest)
+        } catch let err {
+            print("Batch delete failed: \(err)")
+        }
+    }
+    
+//    @objc private func handleReset() {
+//        let context = persistentContainer.viewContext
+//
+//        let batchDeleteRequest =
+//            NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+//
+//        do {
+//            try context.execute(batchDeleteRequest)
+//            var indexPathsToRemove = [IndexPath]()
+//
+//            for (index, _) in companies.enumerated() {
+//                let indexPath = IndexPath(row: index, section: 0)
+//                indexPathsToRemove.append(indexPath)
+//            }
+//
+//            companies.removeAll()
+//            tableView.deleteRows(at: indexPathsToRemove, with: .left)
+//        } catch let err {
+//            print("Batch delete failed: \(err)")
+//        }
+//    }
+    
 }
