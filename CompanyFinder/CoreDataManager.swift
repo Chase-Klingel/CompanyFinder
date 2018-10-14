@@ -57,7 +57,7 @@ struct CoreDataManager {
     
     // MARK: - Create Employee
     
-    func createEmployee(employeeName: String) {
+    func createEmployee(employeeName: String) -> Error? {
         let context = persistentContainer.viewContext
         
         let employee =
@@ -67,8 +67,12 @@ struct CoreDataManager {
         
         do {
             try context.save()
+            
+            return nil
         } catch let err {
             print("Failed to save employee: \(err)")
+            
+            return err
         }
     }
 

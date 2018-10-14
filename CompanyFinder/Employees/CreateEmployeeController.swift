@@ -57,9 +57,23 @@ class CreateEmployeeController: UIViewController {
     
     @objc private func handleSave() {
         guard let emmployeeName = nameTextField.text else { return }
-        CoreDataManager.shared.createEmployee(employeeName: emmployeeName)
+        let error = CoreDataManager.shared.createEmployee(employeeName: emmployeeName)
         
-        dismiss(animated: true, completion: nil)
+        if let _ = error {
+            let errAlert =
+                UIAlertController(title: "Failed to save Employee",
+                                  message: "Something went wrong while trying to save. Please try again.",
+                                  preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            errAlert.addAction(defaultAction)
+            
+            present(errAlert, animated: true, completion: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     private func anchorNameLabelAndTextField() {
