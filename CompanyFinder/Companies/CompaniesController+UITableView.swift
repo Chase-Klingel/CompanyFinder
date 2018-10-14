@@ -34,6 +34,17 @@ extension CompaniesController {
         return cell
     }
     
+    // MARK: - Did Select Row At
+    
+    override func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        let employeeController = EmployeesController()
+        employeeController.company = companies[indexPath.row]
+        
+        navigationController?
+            .pushViewController(employeeController, animated: true)
+    }
+    
     // MARK: - Table View Header
     
     override func tableView(_ tableView: UITableView,

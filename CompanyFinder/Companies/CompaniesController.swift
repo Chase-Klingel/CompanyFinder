@@ -31,10 +31,7 @@ class CompaniesController: UITableViewController {
                            forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
                 
-        navigationItem.rightBarButtonItem =
-            UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),
-                            style: .plain, target: self,
-                            action: #selector(presentAddCompanyController))
+        setupPlusButtonInNavBar(selector: #selector(presentAddCompanyController))
         
         navigationItem.leftBarButtonItem =
             UIBarButtonItem(title: "Reset", style: .plain,
