@@ -56,7 +56,8 @@ class CompaniesController: UITableViewController,
                             action: #selector(presentAddCompanyController))
         
         navigationItem.leftBarButtonItem =
-            UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
+            UIBarButtonItem(title: "Reset", style: .plain,
+                            target: self, action: #selector(handleReset))
     }
     
     // MARK: - Present Add Company Controller
@@ -77,11 +78,17 @@ class CompaniesController: UITableViewController,
         
         do {
             try context.execute(batchDeleteRequest)
+            var indexPathsToRemove = [IndexPath]()
+            
+            for (index, _) in companies.enumerated() {
+                let indexPath = IndexPath(row: index, section: 0)
+                indexPathsToRemove.append(indexPath)
+            }
             
             companies.removeAll()
-            tableView.reloadData()
+            tableView.deleteRows(at: indexPathsToRemove, with: .left)
         } catch let err {
-            print("An error occurred while attempting to batch delete: \(err)")
+            print("Batch delete failed: \(err)")
         }
     }
     
@@ -109,7 +116,8 @@ class CompaniesController: UITableViewController,
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int)
         -> Int {
-            return companies.count
+            
+        return companies.count
     }
     
     override func tableView(_ tableView: UITableView,
@@ -117,35 +125,35 @@ class CompaniesController: UITableViewController,
         
         -> UITableViewCell {
             
-            let cell =
-                tableView.dequeueReusableCell(withIdentifier: cellId,
+        let cell =
+        tableView.dequeueReusableCell(withIdentifier: cellId,
                                               for: indexPath)
-            cell.backgroundColor = .tealColor
+        cell.backgroundColor = .tealColor
 
-            let company = companies[indexPath.row]
+        let company = companies[indexPath.row]
             
-            if let name = company.name, let founded = company.founded {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MMM dd, YYYY"
-                let foundedDate = dateFormatter.string(from: founded)
-                
-                let companyNameAndFoundedDate = "\(name) - Founded: \(foundedDate)"
-                
-                cell.textLabel?.text = companyNameAndFoundedDate
-            } else {
-                cell.textLabel?.text = company.name
-            }
-
-            cell.textLabel?.textColor = .white
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-
-            if let companyImage = company.companyImage {
-                cell.imageView?.image = UIImage(data: companyImage)
-            } else {
-                cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty").withRenderingMode(.alwaysOriginal)
-            }
+        if let name = company.name, let founded = company.founded {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM dd, YYYY"
+            let foundedDate = dateFormatter.string(from: founded)
             
-            return cell
+            let companyNameAndFoundedDate = "\(name) - Founded: \(foundedDate)"
+            
+            cell.textLabel?.text = companyNameAndFoundedDate
+        } else {
+            cell.textLabel?.text = company.name
+        }
+
+        cell.textLabel?.textColor = .white
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+
+        if let companyImage = company.companyImage {
+            cell.imageView?.image = UIImage(data: companyImage)
+        } else {
+            cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty").withRenderingMode(.alwaysOriginal)
+        }
+        
+        return cell
     }
     
     // MARK: - Table View Header Style
@@ -161,10 +169,30 @@ class CompaniesController: UITableViewController,
                             viewForHeaderInSection section: Int)
         -> UIView? {
             
-            let view = UIView()
-            view.backgroundColor = .lightBlue
+        let view = UIView()
+        view.backgroundColor = .lightBlue
             
-            return view
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            viewForFooterInSection section: Int)
+        -> UIView? {
+        
+        let label = UILabel()
+        label.text = "No companies available..."
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+            
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                   heightForFooterInSection section: Int)
+        -> CGFloat {
+        
+        return companies.count > 0 ? 0 : 150
     }
     
     // MARK: - Table View Delete/Edit Action
