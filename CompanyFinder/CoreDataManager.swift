@@ -9,7 +9,6 @@
 import CoreData
 
 struct CoreDataManager {
-    
     static let shared = CoreDataManager()
     
     let persistentContainer: NSPersistentContainer = {
@@ -22,5 +21,23 @@ struct CoreDataManager {
         
         return container
     }()
+    
+    // MARK: - Fetch Companies
+    
+    func fetchCompanies() -> [Company] {
+        let context = persistentContainer.viewContext
+        
+        let fetchRequest =
+            NSFetchRequest<Company>(entityName: "Company")
+        
+        do {
+            let companies = try context.fetch(fetchRequest)
+            
+            return companies
+        } catch let fetchErr {
+            print("Failed to fetch companies: \(fetchErr)")
+            return []
+        }
+    }
     
 }
