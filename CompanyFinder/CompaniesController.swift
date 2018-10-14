@@ -16,13 +16,12 @@ class CompaniesController: UITableViewController,
     
     private let cellId = "cellId"
     private var companies = [Company]()
-    
+    private let context =
+        CoreDataManager.shared.persistentContainer.viewContext
+
     // MARK: - Fetch Companies
     
     func fetchCompanies() {
-        let context =
-            CoreDataManager.shared.persistentContainer.viewContext
-        
         let fetchRequest =
             NSFetchRequest<Company>(entityName: "Company")
         
@@ -51,11 +50,39 @@ class CompaniesController: UITableViewController,
                            forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
                 
-        // controller specific nav action
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),
                             style: .plain, target: self,
                             action: #selector(presentAddCompanyController))
+        
+        navigationItem.leftBarButtonItem =
+            UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
+    }
+    
+    // MARK: - Present Add Company Controller
+    
+    @objc private func presentAddCompanyController() {
+        let createCompanyController = CreateCompanyController()
+        let navController = CustomNavigationController(rootViewController: createCompanyController)
+        createCompanyController.delegate = self
+        
+        present(navController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Reset
+    
+    @objc private func handleReset() {
+        let batchDeleteRequest =
+            NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        
+        do {
+            try context.execute(batchDeleteRequest)
+            
+            companies.removeAll()
+            tableView.reloadData()
+        } catch let err {
+            print("An error occurred while attempting to batch delete: \(err)")
+        }
     }
     
     // MARK: - Add/Edit Company
@@ -75,16 +102,6 @@ class CompaniesController: UITableViewController,
         let indexPath = IndexPath(row: row, section: 0)
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
-    // MARK: - Present Add Company Controller
-    
-    @objc private func presentAddCompanyController() {
-        let createCompanyController = CreateCompanyController()
-        let navController = CustomNavigationController(rootViewController: createCompanyController)
-        createCompanyController.delegate = self
-
-        present(navController, animated: true, completion: nil)
     }
     
     // MARK: - Table View Data Source Methods
@@ -173,9 +190,7 @@ class CompaniesController: UITableViewController,
         
         self.companies.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .fade)
-        
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        
+                
         context.delete(company)
         
         do {

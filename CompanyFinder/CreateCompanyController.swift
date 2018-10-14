@@ -37,6 +37,9 @@ class CreateCompanyController: UIViewController,
         }
     }
     
+    let context =
+        CoreDataManager.shared.persistentContainer.viewContext
+    
     // MARK: - Delegate Assignment
     
     var delegate: CreateCompanyControllerDelegate?
@@ -142,10 +145,11 @@ class CreateCompanyController: UIViewController,
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(title: "Save", style: .plain,
                             target: self, action: #selector(handleSave))
+
         setupUI()
     }
     
-    // MARK: - Cancel and Save
+    // MARK: - Dismiss Controller/Save Company Info
     
     @objc private func handleCancel() {
         dismiss(animated: true, completion: nil)
@@ -159,11 +163,9 @@ class CreateCompanyController: UIViewController,
         }
     }
     
+    // MARK: - Create/Update Company
+    
     private func createCompany() {
-        let context =
-            CoreDataManager.shared
-                .persistentContainer.viewContext
-        
         let company =
             NSEntityDescription.insertNewObject(forEntityName: "Company",
                                                 into: context)
@@ -185,10 +187,6 @@ class CreateCompanyController: UIViewController,
     }
     
     private func updateCompany() {
-        let context =
-            CoreDataManager.shared
-                .persistentContainer.viewContext
-        
         company?.name = nameTextField.text
         company?.founded = datePicker.date
         
