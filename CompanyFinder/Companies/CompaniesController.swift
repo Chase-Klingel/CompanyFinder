@@ -22,7 +22,6 @@ class CompaniesController: UITableViewController {
         super.viewDidLoad()
         
         self.companies = CoreDataManager.shared.fetchCompanies()
-        
         view.backgroundColor = .white
         navigationItem.title = "Companies"
         tableView.backgroundColor = .darkBlue

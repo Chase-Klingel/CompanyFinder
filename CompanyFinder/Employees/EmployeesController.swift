@@ -13,6 +13,7 @@ class EmployeesController: UITableViewController {
     // MARK: - Instance Variables
     
     var company: Company?
+    var employees = [Employee]()
     
     // MARK: - View Will Appear
     
@@ -25,6 +26,7 @@ class EmployeesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.employees = CoreDataManager.shared.fetchEmployees()
         
         view.backgroundColor = UIColor.darkBlue
         setupPlusButtonInNavBar(selector: #selector(handleAddEmployee))

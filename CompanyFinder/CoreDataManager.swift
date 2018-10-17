@@ -55,13 +55,30 @@ struct CoreDataManager {
         }
     }
     
+    // MARK: - Fetch Employees
+    
+    func fetchEmployees() -> [Employee] {
+        let context = persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<Employee>(entityName: "Employee")
+        
+        do {
+            let employees = try context.fetch(fetchRequest)
+            return employees
+        } catch let err {
+            print("Failed to fetch employees: \(err)")
+            return []
+        }
+    }
+    
     // MARK: - Create Employee
     
     func createEmployee(employeeName: String) -> Error? {
         let context = persistentContainer.viewContext
         
         let employee =
-            NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context)
+            NSEntityDescription
+                .insertNewObject(forEntityName: "Employee", into: context)
         
         employee.setValue(employeeName, forKey: "name")
         

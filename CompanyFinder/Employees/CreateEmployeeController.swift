@@ -62,7 +62,10 @@ class CreateEmployeeController: UIViewController {
         if let _ = error {
             let errAlert =
                 UIAlertController(title: "Failed to save Employee",
-                                  message: "Something went wrong while trying to save. Please try again.",
+                                  message: """
+                                            We apologize. Something went wrong
+                                            while trying to save. Please try again.
+                                            """,
                                   preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
                 self.dismiss(animated: true, completion: nil)
