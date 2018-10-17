@@ -31,6 +31,7 @@ extension EmployeesController {
         cell.backgroundColor = .tealColor
         cell.textLabel?.textColor = .white
         cell.textLabel?.text = employees[indexPath.row].name
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             
         return cell
     }

@@ -9,7 +9,13 @@
 import UIKit
 import CoreData
 
+protocol CreateEmployeeControllerDelegate {
+    func didAddEmployee(employee: Employee)
+}
+
 class CreateEmployeeController: UIViewController {
+    
+    var delegate: CreateEmployeeControllerDelegate?
     
     let nameLabel: UILabel =  {
         let label = UILabel()
@@ -75,7 +81,9 @@ class CreateEmployeeController: UIViewController {
             
             present(errAlert, animated: true, completion: nil)
         } else {
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true) {
+                // build logic to display employees on dismiss 
+            }
         }
     }
     

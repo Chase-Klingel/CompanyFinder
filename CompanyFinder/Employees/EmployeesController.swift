@@ -8,7 +8,8 @@
 
 import UIKit
 
-class EmployeesController: UITableViewController {
+class EmployeesController: UITableViewController,
+CreateEmployeeControllerDelegate {
     
     // MARK: - Instance Variables
     
@@ -38,9 +39,16 @@ class EmployeesController: UITableViewController {
     
     @objc private func handleAddEmployee() {
         let creatEmployeeController = CreateEmployeeController()
+        creatEmployeeController.delegate = self
         let navController =
             UINavigationController(rootViewController: creatEmployeeController)
         
         present(navController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Delegate Methods
+    
+    func didAddEmployee(employee: Employee) {
+        // do something
     }
 }
