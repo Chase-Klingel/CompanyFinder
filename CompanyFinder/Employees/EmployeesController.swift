@@ -13,8 +13,9 @@ class EmployeesController: UITableViewController {
     // MARK: - Instance Variables
     
     var company: Company?
-    var employees = [Employee]()
-    
+    private(set) var employees = [Employee]()
+    private(set) var cellId = "cellId"
+
     // MARK: - View Will Appear
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,9 +27,10 @@ class EmployeesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.employees = CoreDataManager.shared.fetchEmployees()
         
         view.backgroundColor = UIColor.darkBlue
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        self.employees = CoreDataManager.shared.fetchEmployees()
         setupPlusButtonInNavBar(selector: #selector(handleAddEmployee))
     }
     
