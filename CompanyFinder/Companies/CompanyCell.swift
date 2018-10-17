@@ -50,7 +50,6 @@ class CompanyCell: UITableViewCell {
     
     let companyLabel: UILabel = {
         let label = UILabel()
-        label.text = "COMPANY NAME"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .white
         
