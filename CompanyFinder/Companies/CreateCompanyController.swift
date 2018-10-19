@@ -198,6 +198,14 @@ class CreateCompanyController: UIViewController,
             .saveCompanyUpdates()
         
         if let _ = err {
+            /*******
+             make a reusable method for this and replace:
+             
+             1. CreateCompanyController: Lines 207 - 220
+             2. CreateCompanyController: 165 - 178
+             3. CreateEmployeeController: 71 - 84
+             
+            ********/
             let errAlert =
                 UIAlertController(title: "Failed to update!",
                                   message: """
