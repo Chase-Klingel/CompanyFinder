@@ -37,9 +37,6 @@ class CreateCompanyController: UIViewController,
         }
     }
     
-    let context =
-        CoreDataManager.shared.persistentContainer.viewContext
-    
     // MARK: - Delegate Assignment
     
     var delegate: CreateCompanyControllerDelegate?
@@ -166,7 +163,7 @@ class CreateCompanyController: UIViewController,
         
         if let _ = tuple.1 {
             let errAlert =
-                UIAlertController(title: "Failed to save company",
+                UIAlertController(title: "Failed to save company!",
                                   message: """
                                             We apologize. Something went wrong
                                             while trying to save. Please try again.
@@ -191,21 +188,35 @@ class CreateCompanyController: UIViewController,
     private func updateCompany() {
         company?.name = nameTextField.text
         company?.founded = datePicker.date
-        
+
         if let companyImage = companyImageView.image {
-            company?.companyImage = UIImageJPEGRepresentation(companyImage, 0.8)
+            company?.companyImage =
+                UIImageJPEGRepresentation(companyImage, 0.8)
         }
         
-        do {
-            try context.save()
-            dismiss(animated: true) {
-               self.delegate?.didEditCompany(company: self.company!)
+        let err = CoreDataManager.shared
+            .saveCompanyUpdates()
+        
+        if let _ = err {
+            let errAlert =
+                UIAlertController(title: "Failed to update!",
+                                  message: """
+                                            We apologize. Something went wrong
+                                            while trying to save. Please try again.
+                                            """,
+                                  preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
+                self.dismiss(animated: true, completion: nil)
             }
-        } catch let err {
-            print("Failed to update company name: \(err)")
+            
+            errAlert.addAction(defaultAction)
+            
+            present(errAlert, animated: true, completion: nil)
+        } else {
+            dismiss(animated: true) {
+                self.delegate?.didEditCompany(company: self.company!)
+            }
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Position UI Elements

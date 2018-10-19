@@ -66,7 +66,23 @@ struct CoreDataManager {
         }
     }
     
-    // MARK: - Reset
+    // MARK: - Update Company
+    
+    func saveCompanyUpdates() -> Error? {
+        let context = persistentContainer.viewContext
+
+        do {
+            try context.save()
+            
+            return nil
+        } catch let err {
+            print(err)
+            
+            return err
+        }
+    }
+    
+    // MARK: - Batch Delete Companies
     
     func deleteAllCompanies() {
         let context = persistentContainer.viewContext
@@ -99,7 +115,7 @@ struct CoreDataManager {
     
     // MARK: - Create Employee
     
-    func createEmployee(employeeName: String) -> (Employee?, Error?) {
+    func saveEmployee(employeeName: String) -> (Employee?, Error?) {
         let context = persistentContainer.viewContext
         
         let employee =
