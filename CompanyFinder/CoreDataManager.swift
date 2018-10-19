@@ -40,6 +40,32 @@ struct CoreDataManager {
         }
     }
     
+    // MARK: - Create Company
+    
+    func saveCompany(companyName: String,
+                     companyFounded: Date,
+                     companyImageData: Data) -> (Company?, Error?) {
+        let context = persistentContainer.viewContext
+
+        let company =
+            NSEntityDescription
+                .insertNewObject(forEntityName: "Company",
+                                 into: context) as! Company
+        
+        company.setValue(companyName, forKey: "name")
+        company.setValue(companyFounded, forKey: "founded")
+        company.setValue(companyImageData, forKey: "companyImage")
+        
+        do {
+            try context.save()
+            return (company, nil)
+        } catch let err {
+            print("Failed to save new company: \(err)")
+            
+            return (nil, err)
+        }
+    }
+    
     // MARK: - Reset
     
     func deleteAllCompanies() {
@@ -73,23 +99,24 @@ struct CoreDataManager {
     
     // MARK: - Create Employee
     
-    func createEmployee(employeeName: String) -> Error? {
+    func createEmployee(employeeName: String) -> (Employee?, Error?) {
         let context = persistentContainer.viewContext
         
         let employee =
             NSEntityDescription
-                .insertNewObject(forEntityName: "Employee", into: context)
+                .insertNewObject(forEntityName: "Employee",
+                                 into: context) as! Employee
         
         employee.setValue(employeeName, forKey: "name")
-        
+
         do {
             try context.save()
             
-            return nil
+            return (employee, nil)
         } catch let err {
             print("Failed to save employee: \(err)")
             
-            return err
+            return (nil, err)
         }
     }
 

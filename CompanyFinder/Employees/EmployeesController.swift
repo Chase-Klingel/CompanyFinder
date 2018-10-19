@@ -49,6 +49,7 @@ CreateEmployeeControllerDelegate {
     // MARK: - Delegate Methods
     
     func didAddEmployee(employee: Employee) {
-        // do something
+        employees.append(employee)
+        tableView.reloadData()
     }
 }

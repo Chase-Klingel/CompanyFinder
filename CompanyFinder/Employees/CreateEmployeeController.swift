@@ -63,9 +63,11 @@ class CreateEmployeeController: UIViewController {
     
     @objc private func handleSave() {
         guard let emmployeeName = nameTextField.text else { return }
-        let error = CoreDataManager.shared.createEmployee(employeeName: emmployeeName)
+        let tuple =
+            CoreDataManager.shared
+                .createEmployee(employeeName: emmployeeName)
         
-        if let _ = error {
+        if let _ = tuple.1 {
             let errAlert =
                 UIAlertController(title: "Failed to save Employee",
                                   message: """
@@ -82,7 +84,9 @@ class CreateEmployeeController: UIViewController {
             present(errAlert, animated: true, completion: nil)
         } else {
             dismiss(animated: true) {
-                // build logic to display employees on dismiss 
+                // force unwrapping ok b/c can guarantee a value
+                
+                self.delegate?.didAddEmployee(employee: tuple.0!)
             }
         }
     }

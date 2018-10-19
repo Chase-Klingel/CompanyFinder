@@ -150,23 +150,41 @@ class CreateCompanyController: UIViewController,
     // MARK: - Create/Update Company
     
     private func createCompany() {
-        let company =
-            NSEntityDescription.insertNewObject(forEntityName: "Company",
-                                                into: context)
-        company.setValue(nameTextField.text, forKey: "name")
-        company.setValue(datePicker.date, forKey: "founded")
+        var imageData: Data?
+        
+        guard let companyName = nameTextField.text
+            else { return }
+        
         if let companyImage = companyImageView.image {
-            let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
-            company.setValue(imageData, forKey: "companyImage")
+            imageData = UIImageJPEGRepresentation(companyImage, 0.8)
         }
-    
-        do {
-            try context.save()
-            dismiss(animated: true) {
-                self.delegate?.didAddCompany(company: company as! Company)
+        
+        let tuple = CoreDataManager.shared
+            .saveCompany(companyName: companyName,
+                         companyFounded: datePicker.date,
+                         companyImageData: imageData!)
+        
+        if let _ = tuple.1 {
+            let errAlert =
+                UIAlertController(title: "Failed to save company",
+                                  message: """
+                                            We apologize. Something went wrong
+                                            while trying to save. Please try again.
+                                            """,
+                                  preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
+                self.dismiss(animated: true, completion: nil)
             }
-        } catch let err {
-            print("Failed to save new company: \(err)")
+            
+            errAlert.addAction(defaultAction)
+            
+            present(errAlert, animated: true, completion: nil)
+        } else {
+            dismiss(animated: true) {
+                // force unwrapping ok b/c can guarantee a value
+
+                self.delegate?.didAddCompany(company: tuple.0!)
+            }
         }
     }
     
