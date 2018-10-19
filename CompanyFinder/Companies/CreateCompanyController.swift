@@ -199,6 +199,7 @@ class CreateCompanyController: UIViewController,
         
         if let _ = err {
             /*******
+             
              make a reusable method for this and replace:
              
              1. CreateCompanyController: Lines 207 - 220

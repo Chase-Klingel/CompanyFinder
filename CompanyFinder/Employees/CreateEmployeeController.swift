@@ -9,14 +9,20 @@
 import UIKit
 import CoreData
 
+// MARK: - Protocols
+
 protocol CreateEmployeeControllerDelegate {
     func didAddEmployee(employee: Employee)
 }
 
 class CreateEmployeeController: UIViewController {
     
+    //MARK: - Instance Variables
+
     var delegate: CreateEmployeeControllerDelegate?
     
+    // MARK: - UI Elements
+
     let nameLabel: UILabel =  {
         let label = UILabel()
         label.text = "Name"
@@ -47,6 +53,8 @@ class CreateEmployeeController: UIViewController {
         return textField
     }()
     
+    // MARK: - View Did Load
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +68,8 @@ class CreateEmployeeController: UIViewController {
         anchorNameLabelAndTextField()
         anchorBirthLabelAndTextField()
     }
+    
+    // MARK: - Save Employee
     
     @objc private func handleSave() {
         guard let emmployeeName = nameTextField.text else { return }
@@ -90,6 +100,8 @@ class CreateEmployeeController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Position UI Elements
     
     private func anchorNameLabelAndTextField() {
         view.addSubview(nameLabel)
