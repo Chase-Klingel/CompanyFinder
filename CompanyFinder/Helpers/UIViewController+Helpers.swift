@@ -10,6 +10,12 @@ import UIKit
 
 extension UIViewController {
     
+    /******************************************************************
+     
+                         NAVIGATION RELATED ITEMS
+     
+    ******************************************************************/
+    
     func setupPlusButtonInNavBar(selector: Selector) {
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal),
@@ -37,7 +43,13 @@ extension UIViewController {
                             target: self,
                             action: selector)
     }
-
+    
+    /******************************************************************
+     
+            BACKGROUND VIEW FOR CREATEEMPLOYEE/CREATECOMPANY
+     
+    ******************************************************************/
+    
     func anchorBackgroundView(height: CGFloat) -> UIView {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .lightBlue
@@ -51,6 +63,12 @@ extension UIViewController {
         
         return backgroundView
     }
+    
+    /******************************************************************
+     
+                          ALERT FOR ERROR ON SAVE
+     
+    ******************************************************************/
     
     func errorAlert(title: String, message: String) -> UIAlertController {
         let errAlert = UIAlertController(title: "Failed to update!",
