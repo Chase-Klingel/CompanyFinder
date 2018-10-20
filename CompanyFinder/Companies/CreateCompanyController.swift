@@ -162,19 +162,12 @@ class CreateCompanyController: UIViewController,
                          companyImageData: imageData!)
         
         if let _ = tuple.1 {
-            let errAlert =
-                UIAlertController(title: "Failed to save company!",
-                                  message: """
-                                            We apologize. Something went wrong
-                                            while trying to save. Please try again.
-                                            """,
-                                  preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            errAlert.addAction(defaultAction)
-            
+            let errAlert: UIAlertController =
+                errorAlert(title: "Failed to save company!",
+                           message: """
+                                    We apologize. Something went wrong
+                                    while trying to save. Please try again.
+                                    """)
             present(errAlert, animated: true, completion: nil)
         } else {
             dismiss(animated: true) {
@@ -198,28 +191,12 @@ class CreateCompanyController: UIViewController,
             .saveCompanyUpdates()
         
         if let _ = err {
-            /*******
-             
-             make a reusable method for this and replace:
-             
-             1. CreateCompanyController: Lines 207 - 220
-             2. CreateCompanyController: 165 - 178
-             3. CreateEmployeeController: 71 - 84
-             
-            ********/
-            let errAlert =
-                UIAlertController(title: "Failed to update!",
-                                  message: """
-                                            We apologize. Something went wrong
-                                            while trying to save. Please try again.
-                                            """,
-                                  preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            errAlert.addAction(defaultAction)
-            
+            let errAlert: UIAlertController =
+                errorAlert(title: "Failed to update!",
+                           message: """
+                                    We apologize. Something went wrong
+                                    while trying to save. Please try again.
+                                    """)
             present(errAlert, animated: true, completion: nil)
         } else {
             dismiss(animated: true) {

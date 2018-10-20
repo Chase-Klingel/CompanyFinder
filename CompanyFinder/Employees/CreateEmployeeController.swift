@@ -78,19 +78,12 @@ class CreateEmployeeController: UIViewController {
                 .saveEmployee(employeeName: emmployeeName)
         
         if let _ = tuple.1 {
-            let errAlert =
-                UIAlertController(title: "Failed to save Employee",
-                                  message: """
-                                            We apologize. Something went wrong
-                                            while trying to save. Please try again.
-                                            """,
-                                  preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            errAlert.addAction(defaultAction)
-            
+            let errAlert: UIAlertController =
+                errorAlert(title: "Failed to save Employee!",
+                           message: """
+                                    We apologize. Something went wrong
+                                    while trying to save. Please try again.
+                                    """)
             present(errAlert, animated: true, completion: nil)
         } else {
             dismiss(animated: true) {

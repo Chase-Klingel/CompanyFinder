@@ -52,4 +52,20 @@ extension UIViewController {
         return backgroundView
     }
     
+    func errorAlert(title: String, message: String) -> UIAlertController {
+        let errAlert = UIAlertController(title: "Failed to update!",
+                          message: """
+                                            We apologize. Something went wrong
+                                            while trying to save. Please try again.
+                                            """,
+                          preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        errAlert.addAction(defaultAction)
+        
+        return errAlert
+    }
+    
 }
