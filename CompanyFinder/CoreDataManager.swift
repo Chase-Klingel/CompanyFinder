@@ -124,7 +124,7 @@ struct CoreDataManager {
                                  into: context) as! Employee
         
         employee.setValue(employeeName, forKey: "name")
-
+        
         do {
             try context.save()
             
