@@ -32,7 +32,8 @@ CreateEmployeeControllerDelegate {
         view.backgroundColor = UIColor.darkBlue
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         
-        self.employees = CoreDataManager.shared.fetchEmployees()
+        guard let company = company else { return }
+        self.employees = CoreDataManager.shared.fetchEmployees(company: company)
         
         setupPlusButtonInNavBar(selector: #selector(handleAddEmployee))
     }

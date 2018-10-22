@@ -99,8 +99,12 @@ struct CoreDataManager {
     
     // MARK: - Fetch Employees
     
-    func fetchEmployees() -> [Employee] {
-        let context = persistentContainer.viewContext
+    func fetchEmployees(company: Company) -> [Employee] {
+        guard let companyEmployees = company.employees?.allObjects
+            as? [Employee] else { return [] }
+        
+        return companyEmployees
+        /*let context = persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<Employee>(entityName: "Employee")
         
@@ -110,12 +114,14 @@ struct CoreDataManager {
         } catch let err {
             print("Failed to fetch employees: \(err)")
             return []
-        }
+        } */
     }
     
     // MARK: - Create Employee
     
-    func createEmployee(employeeName: String, company: Company) -> (Employee?, Error?) {
+    func createEmployee(employeeName: String, company: Company)
+        -> (Employee?, Error?) {
+            
         let context = persistentContainer.viewContext
         
         let employee =
