@@ -104,17 +104,6 @@ struct CoreDataManager {
             as? [Employee] else { return [] }
         
         return companyEmployees
-        /*let context = persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<Employee>(entityName: "Employee")
-        
-        do {
-            let employees = try context.fetch(fetchRequest)
-            return employees
-        } catch let err {
-            print("Failed to fetch employees: \(err)")
-            return []
-        } */
     }
     
     // MARK: - Create Employee
