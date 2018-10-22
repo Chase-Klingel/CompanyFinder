@@ -75,7 +75,7 @@ class CreateEmployeeController: UIViewController {
         guard let emmployeeName = nameTextField.text else { return }
         let tuple =
             CoreDataManager.shared
-                .saveEmployee(employeeName: emmployeeName)
+                .createEmployee(employeeName: emmployeeName)
         
         if let _ = tuple.1 {
             let errAlert: UIAlertController =

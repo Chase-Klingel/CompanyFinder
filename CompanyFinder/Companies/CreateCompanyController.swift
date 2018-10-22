@@ -157,7 +157,7 @@ class CreateCompanyController: UIViewController,
         }
         
         let tuple = CoreDataManager.shared
-            .saveCompany(companyName: companyName,
+            .createCompany(companyName: companyName,
                          companyFounded: datePicker.date,
                          companyImageData: imageData!)
         
@@ -188,7 +188,7 @@ class CreateCompanyController: UIViewController,
         }
         
         let err = CoreDataManager.shared
-            .saveCompanyUpdates()
+            .updateCompany()
         
         if let _ = err {
             let errAlert: UIAlertController =

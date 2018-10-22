@@ -42,7 +42,7 @@ struct CoreDataManager {
     
     // MARK: - Create Company
     
-    func saveCompany(companyName: String,
+    func createCompany(companyName: String,
                      companyFounded: Date,
                      companyImageData: Data) -> (Company?, Error?) {
         let context = persistentContainer.viewContext
@@ -68,7 +68,7 @@ struct CoreDataManager {
     
     // MARK: - Update Company
     
-    func saveCompanyUpdates() -> Error? {
+    func updateCompany() -> Error? {
         let context = persistentContainer.viewContext
 
         do {
@@ -115,7 +115,7 @@ struct CoreDataManager {
     
     // MARK: - Create Employee
     
-    func saveEmployee(employeeName: String) -> (Employee?, Error?) {
+    func createEmployee(employeeName: String) -> (Employee?, Error?) {
         let context = persistentContainer.viewContext
         
         let employee =
