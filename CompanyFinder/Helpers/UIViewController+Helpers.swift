@@ -10,11 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    /******************************************************************
-     
-                         NAVIGATION RELATED ITEMS
-     
-    ******************************************************************/
+    // MARK: - Navigation Related Items
     
     func setupPlusButtonInNavBar(selector: Selector) {
         navigationItem.rightBarButtonItem =
@@ -44,11 +40,7 @@ extension UIViewController {
                             action: selector)
     }
     
-    /******************************************************************
-     
-            BACKGROUND VIEW FOR CREATEEMPLOYEE/CREATECOMPANY
-     
-    ******************************************************************/
+    // MARK: - Background View For CreateEmployee/CreateCompany
     
     func anchorBackgroundView(height: CGFloat) -> UIView {
         let backgroundView = UIView()
@@ -63,12 +55,8 @@ extension UIViewController {
         
         return backgroundView
     }
-    
-    /******************************************************************
-     
-                          ALERT FOR ERROR ON SAVE
-     
-    ******************************************************************/
+
+    // MARK: - Alert For Error On Save
     
     func errorAlert(title: String, message: String) -> UIAlertController {
         let errAlert = UIAlertController(title: "Failed to update!",
