@@ -20,6 +20,7 @@ class CreateEmployeeController: UIViewController {
     //MARK: - Instance Variables
 
     var delegate: CreateEmployeeControllerDelegate?
+    var company: Company?
     
     // MARK: - UI Elements
 
@@ -73,9 +74,10 @@ class CreateEmployeeController: UIViewController {
     
     @objc private func handleSave() {
         guard let emmployeeName = nameTextField.text else { return }
+        guard let company = company else { return }
         let tuple =
             CoreDataManager.shared
-                .createEmployee(employeeName: emmployeeName)
+                .createEmployee(employeeName: emmployeeName, company: company)
         
         if let _ = tuple.1 {
             let errAlert: UIAlertController =

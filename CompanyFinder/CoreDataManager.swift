@@ -115,7 +115,7 @@ struct CoreDataManager {
     
     // MARK: - Create Employee
     
-    func createEmployee(employeeName: String) -> (Employee?, Error?) {
+    func createEmployee(employeeName: String, company: Company) -> (Employee?, Error?) {
         let context = persistentContainer.viewContext
         
         let employee =
@@ -124,6 +124,7 @@ struct CoreDataManager {
                                  into: context) as! Employee
         
         employee.setValue(employeeName, forKey: "name")
+        employee.company = company
         
         do {
             try context.save()
