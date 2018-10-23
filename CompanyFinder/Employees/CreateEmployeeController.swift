@@ -73,20 +73,40 @@ class CreateEmployeeController: UIViewController {
     // MARK: - Save Employee
     
     @objc private func handleSave() {
+        print("handle save")
         guard let emmployeeName = nameTextField.text else { return }
         guard let birthdayText = birthTextField.text else { return }
+        
+        if birthdayText.isEmpty {
+            let emptyBirthdayValidation: UIAlertController =
+                errorAlert(title: "Empty Birthday",
+                           message: "Please enter a birthday.")
+            
+            present(emptyBirthdayValidation, animated: true, completion: nil)
+            
+            return
+        }
+        
         guard let company = company else { return }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
-        
-        let birthdayDate = dateFormatter.date(from: birthdayText)
-        guard let birthDate = birthdayDate else { return }
+        guard let birthdayDate = dateFormatter.date(from: birthdayText)
+            else {
+                
+                let birthdayDateFormatValidation: UIAlertController =
+                errorAlert(title: "Bad Date Format",
+                               message: "Please type date as mm/dd/yyyy.")
+                
+                present(birthdayDateFormatValidation, animated: true, completion: nil)
+                
+                return
+        }
         
         let tuple =
             CoreDataManager.shared
                 .createEmployee(employeeName: emmployeeName,
-                                birthday: birthDate,
+                                birthday: birthdayDate,
                                 company: company)
         
         if let _ = tuple.1 {
