@@ -27,10 +27,21 @@ extension EmployeesController {
     
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath)
+        let employee = employees[indexPath.row]
             
         cell.backgroundColor = .tealColor
         cell.textLabel?.textColor = .white
-        cell.textLabel?.text = employees[indexPath.row].name
+        
+        if let birthday = employee.employeeInfo?.birthday {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM dd, yyyy"
+            
+            let birthdayStr = dateFormatter.string(from: birthday)
+            cell.textLabel?.text = "\(employee.name ?? "") \(birthdayStr)"
+        } else {
+            cell.textLabel?.text = "\(employee.name ?? "")"
+        }
+            
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             
         return cell

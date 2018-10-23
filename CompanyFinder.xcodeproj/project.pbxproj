@@ -89,8 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				6564223F2173BF430070012A /* EmployeesController.swift */,
-				656422452173C9AB0070012A /* CreateEmployeeController.swift */,
 				6564224921777FBC0070012A /* EmployeesController+UITableView.swift */,
+				656422452173C9AB0070012A /* CreateEmployeeController.swift */,
 			);
 			path = Employees;
 			sourceTree = "<group>";
