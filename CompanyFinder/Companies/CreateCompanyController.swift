@@ -162,13 +162,13 @@ class CreateCompanyController: UIViewController,
                          companyImageData: imageData!)
         
         if let _ = tuple.1 {
-            let errAlert: UIAlertController =
-                errorAlert(title: "Failed to save company!",
-                           message: """
-                                    We apologize. Something went wrong
-                                    while trying to save. Please try again.
-                                    """)
-            present(errAlert, animated: true, completion: nil)
+            showAlert(title: "Failed to save company!",
+                      message: """
+                                We apologize. Something went wrong
+                                while trying to save. Please try again.
+                               """)
+            
+            return
         } else {
             dismiss(animated: true) {
                 // force unwrapping ok b/c can guarantee a value
@@ -191,13 +191,13 @@ class CreateCompanyController: UIViewController,
             .updateCompany()
         
         if let _ = err {
-            let errAlert: UIAlertController =
-                errorAlert(title: "Failed to update!",
-                           message: """
-                                    We apologize. Something went wrong
-                                    while trying to save. Please try again.
-                                    """)
-            present(errAlert, animated: true, completion: nil)
+            showAlert(title: "Failed to update!",
+                      message: """
+                                We apologize. Something went wrong
+                                while trying to save. Please try again.
+                               """)
+            
+            return
         } else {
             dismiss(animated: true) {
                 self.delegate?.didEditCompany(company: self.company!)

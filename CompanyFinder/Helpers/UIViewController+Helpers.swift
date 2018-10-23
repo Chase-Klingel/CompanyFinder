@@ -58,20 +58,16 @@ extension UIViewController {
 
     // MARK: - Alert For Error On Save
     
-    func errorAlert(title: String, message: String) -> UIAlertController {
-        let errAlert = UIAlertController(title: "Failed to update!",
-                          message: """
-                                            We apologize. Something went wrong
-                                            while trying to save. Please try again.
-                                            """,
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                          message: message,
                           preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "Okay", style: .default) { (_) in
-            self.dismiss(animated: true, completion: nil)
-        }
+        let defaultAction = UIAlertAction(title: "Okay",
+                                          style: .default,
+                                          handler: nil)
         
-        errAlert.addAction(defaultAction)
-        
-        return errAlert
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
     }
     
 }

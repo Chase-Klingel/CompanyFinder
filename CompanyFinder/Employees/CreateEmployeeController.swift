@@ -78,11 +78,8 @@ class CreateEmployeeController: UIViewController {
         guard let birthdayText = birthTextField.text else { return }
         
         if birthdayText.isEmpty {
-            let emptyBirthdayValidation: UIAlertController =
-                errorAlert(title: "Empty Birthday",
+            showAlert(title: "Empty Birthday",
                            message: "Please enter a birthday.")
-            
-            present(emptyBirthdayValidation, animated: true, completion: nil)
             
             return
         }
@@ -93,13 +90,9 @@ class CreateEmployeeController: UIViewController {
         dateFormatter.dateFormat = "MM/dd/yyyy"
         guard let birthdayDate = dateFormatter.date(from: birthdayText)
             else {
-                
-                let birthdayDateFormatValidation: UIAlertController =
-                errorAlert(title: "Bad Date Format",
-                               message: "Please type date as mm/dd/yyyy.")
-                
-                present(birthdayDateFormatValidation, animated: true, completion: nil)
-                
+                showAlert(title: "Bad Date Format",
+                      message: "Please type date as mm/dd/yyyy.")
+                                
                 return
         }
         
@@ -110,13 +103,13 @@ class CreateEmployeeController: UIViewController {
                                 company: company)
         
         if let _ = tuple.1 {
-            let errAlert: UIAlertController =
-                errorAlert(title: "Failed to save Employee!",
-                           message: """
-                                    We apologize. Something went wrong
-                                    while trying to save. Please try again.
-                                    """)
-            present(errAlert, animated: true, completion: nil)
+            showAlert(title: "Failed to save Employee!",
+                      message: """
+                                We apologize. Something went wrong
+                                while trying to save. Please try again.
+                               """)
+            
+            return
         } else {
             dismiss(animated: true) {
                 // force unwrapping ok b/c can guarantee a value
