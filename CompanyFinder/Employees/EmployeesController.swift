@@ -8,6 +8,14 @@
 
 import UIKit
 
+class IndentedLabel: UILabel {
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        let customRect = UIEdgeInsetsInsetRect(rect, insets)
+        super.drawText(in: customRect)
+    }
+}
+
 class EmployeesController: UITableViewController,
 CreateEmployeeControllerDelegate {
     
@@ -15,8 +23,6 @@ CreateEmployeeControllerDelegate {
     
     var company: Company?
     private(set) var employees = [[Employee]]()
-    //private(set) var shortNameEmployees = [Employee]()
-    // private(set) var longNameEmployees = [Employee]()
     private(set) var cellId = "cellId"
 
     // MARK: - View Will Appear
@@ -32,7 +38,7 @@ CreateEmployeeControllerDelegate {
     
     override func tableView(_ tableView: UITableView,
                             viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
+        let label = IndentedLabel()
         label.backgroundColor = .lightBlue
         
         if section == 0 {
