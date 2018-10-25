@@ -14,7 +14,9 @@ CreateEmployeeControllerDelegate {
     // MARK: - Instance Variables
     
     var company: Company?
-    private(set) var employees = [Employee]()
+    private(set) var employees = [[Employee]]()
+    //private(set) var shortNameEmployees = [Employee]()
+    // private(set) var longNameEmployees = [Employee]()
     private(set) var cellId = "cellId"
 
     // MARK: - View Will Appear
@@ -22,6 +24,32 @@ CreateEmployeeControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = company?.name
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return employees.count
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.backgroundColor = .lightBlue
+        
+        if section == 0 {
+            label.text = "SHORT NAMES"
+        } else {
+            label.text = "LONG NAMES"
+        }
+        
+        label.textColor = .darkBlue
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                   heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
     
     // MARK: - View Did Load
@@ -33,7 +61,10 @@ CreateEmployeeControllerDelegate {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         
         guard let company = company else { return }
-        self.employees = CoreDataManager.shared.fetchEmployees(company: company)
+        
+        employees =
+            CoreDataManager.shared.fetchEmployees(company: company)
+            as! [[Employee]]
         
         setupPlusButtonInNavBar(selector: #selector(handleAddEmployee))
     }
@@ -53,7 +84,14 @@ CreateEmployeeControllerDelegate {
     // MARK: - Delegate Methods
     
     func didAddEmployee(employee: Employee) {
-        employees.append(employee)
+        guard let employeeNameLength = employee.name?.count
+            else { return }
+        if employeeNameLength < 6 {
+            employees[0].append(employee)
+        } else {
+            employees[1].append(employee)
+        }
+
         tableView.reloadData()
     }
 }

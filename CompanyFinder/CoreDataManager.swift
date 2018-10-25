@@ -99,11 +99,31 @@ struct CoreDataManager {
     
     // MARK: - Fetch Employees
     
-    func fetchEmployees(company: Company) -> [Employee] {
+    func fetchEmployees(company: Company) -> [[Employee?]] {
         guard let companyEmployees = company.employees?.allObjects
-            as? [Employee] else { return [] }
+            as? [Employee] else { return [[nil]] }
         
-        return companyEmployees
+        let shortNameEmployees = companyEmployees.filter {
+            (employee) -> Bool in
+            
+            if let count = employee.name?.count {
+                return count < 6
+            }
+            
+            return false
+        }
+        
+        let longNameEmployees = companyEmployees.filter {
+            (employee) -> Bool in
+            
+            if let count = employee.name?.count {
+                return count > 6
+            }
+            
+            return false
+        }
+        
+        return [shortNameEmployees,longNameEmployees]
     }
     
     // MARK: - Create Employee

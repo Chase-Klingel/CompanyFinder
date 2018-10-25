@@ -13,21 +13,19 @@ extension EmployeesController {
     // MARK: - Table View Data Source Methods
 
     override func tableView(_ tableView: UITableView,
-                            numberOfRowsInSection section: Int)
-        -> Int {
-        
-        return employees.count
+                            numberOfRowsInSection section: Int) -> Int {
+        return employees[section].count
     }
     
     // MARK: - Did Select Row At
     
     override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell {
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath)
-        let employee = employees[indexPath.row]
+        
+        let employee = employees[indexPath.section][indexPath.row]
             
         cell.backgroundColor = .tealColor
         cell.textLabel?.textColor = .white
