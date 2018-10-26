@@ -25,7 +25,7 @@ class CreateEmployeeController: UIViewController {
     // MARK: - UI Elements
 
     let nameLabel: UILabel =  {
-        let label = UILabel()
+        let label = IndentedLabel()
         label.text = "Name"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         
@@ -33,7 +33,7 @@ class CreateEmployeeController: UIViewController {
     }()
     
     let birthLabel: UILabel = {
-        let label = UILabel()
+        let label = IndentedLabel()
         label.text = "Birthday"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         
@@ -54,6 +54,16 @@ class CreateEmployeeController: UIViewController {
         return textField
     }()
     
+    let employeeTypeSegmentedControl: UISegmentedControl = {
+        let types = ["Executive", "Senior Management", "Staff"]
+        let sc = UISegmentedControl(items: types)
+        sc.translatesAutoresizingMaskIntoConstraints  = false
+        sc.selectedSegmentIndex = 0
+        sc.tintColor = .darkBlue
+        
+        return sc
+    }()
+    
     // MARK: - View Did Load
     
     override func viewDidLoad() {
@@ -65,15 +75,18 @@ class CreateEmployeeController: UIViewController {
         setupCancelButton()
         setupSaveButtonInNavBar(selector: #selector(handleSave))
         
-        _ = anchorBackgroundView(height: 100)
+        // light grey background
+        _ = anchorBackgroundView(height: 150)
+        
         anchorNameLabelAndTextField()
         anchorBirthLabelAndTextField()
+        anchorEmployeeTypeSegmentedControl()
     }
     
     // MARK: - Save Employee
     
-    @objc private func handleSave() {
-        print("handle save")
+    @objc private func handleSave() {        
+        guard let company = company else { return }
         guard let emmployeeName = nameTextField.text else { return }
         guard let birthdayText = birthTextField.text else { return }
         
@@ -83,8 +96,6 @@ class CreateEmployeeController: UIViewController {
             
             return
         }
-        
-        guard let company = company else { return }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -96,11 +107,16 @@ class CreateEmployeeController: UIViewController {
                 return
         }
         
+        guard let employeeType = employeeTypeSegmentedControl
+            .titleForSegment(at: employeeTypeSegmentedControl.selectedSegmentIndex)
+            else { return }
+        
         let tuple =
             CoreDataManager.shared
                 .createEmployee(employeeName: emmployeeName,
                                 birthday: birthdayDate,
-                                company: company)
+                                company: company,
+                                employeeType: employeeType)
         
         if let _ = tuple.1 {
             showAlert(title: "Failed to save Employee!",
@@ -125,9 +141,9 @@ class CreateEmployeeController: UIViewController {
         view.addSubview(nameLabel)
         nameLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor,
                          bottom: nil, trailing: nil,
-                         paddingTop: 0, paddingLeft: 15,
+                         paddingTop: 0, paddingLeft: 0,
                          paddingBottom: 0, paddingRight: 0,
-                         width: 75, height: 50)
+                         width: 100, height: 50)
         
         view.addSubview(nameTextField)
         nameTextField.anchor(top: nil, leading: nameLabel.trailingAnchor,
@@ -143,9 +159,9 @@ class CreateEmployeeController: UIViewController {
         view.addSubview(birthLabel)
         birthLabel.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor,
                          bottom: nil, trailing: nil,
-                         paddingTop: 0, paddingLeft: 15,
+                         paddingTop: 0, paddingLeft: 0,
                          paddingBottom: 0, paddingRight: 0,
-                         width: 75, height: 50)
+                         width: 100, height: 50)
         
         view.addSubview(birthTextField)
         birthTextField.anchor(top: nil, leading: birthLabel.trailingAnchor,
@@ -155,5 +171,10 @@ class CreateEmployeeController: UIViewController {
                              width: 0, height: 0)
         birthTextField.centerYAnchor
             .constraint(equalTo: birthLabel.centerYAnchor).isActive = true
+    }
+    
+    private func anchorEmployeeTypeSegmentedControl() {
+        view.addSubview(employeeTypeSegmentedControl)
+        employeeTypeSegmentedControl.anchor(top: birthLabel.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 0)
     }
 }

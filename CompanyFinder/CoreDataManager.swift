@@ -130,7 +130,8 @@ struct CoreDataManager {
     
     func createEmployee(employeeName: String,
                         birthday: Date,
-                        company: Company)
+                        company: Company,
+                        employeeType: String)
         -> (Employee?, Error?) {
             
         let context = persistentContainer.viewContext
@@ -151,7 +152,7 @@ struct CoreDataManager {
                 .insertNewObject(forEntityName: "EmployeeInfo",
                                  into: context) as! EmployeeInfo
         employeeInfo.birthday = birthday
-        
+        employeeInfo.type = employeeType
         // set employee info
         employee.employeeInfo = employeeInfo
         
