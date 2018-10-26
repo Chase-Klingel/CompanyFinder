@@ -102,28 +102,33 @@ struct CoreDataManager {
     func fetchEmployees(company: Company) -> [[Employee?]] {
         guard let companyEmployees = company.employees?.allObjects
             as? [Employee] else { return [[nil]] }
-        
-        let shortNameEmployees = companyEmployees.filter {
-            (employee) -> Bool in
-            
-            if let count = employee.name?.count {
-                return count < 6
+
+        let employeeTypes = CreateEmployeeController.employeeTypes
+        let firstSegment = companyEmployees.filter { (employee) -> Bool in
+            if let employeeType = employee.employeeInfo?.type {
+                return employeeType == employeeTypes[0]
             }
             
             return false
         }
         
-        let longNameEmployees = companyEmployees.filter {
-            (employee) -> Bool in
-            
-            if let count = employee.name?.count {
-                return count > 6
+        let secondSegment = companyEmployees.filter{ (employee) -> Bool in
+            if let employeeType = employee.employeeInfo?.type {
+                return employeeType == employeeTypes[1]
             }
             
             return false
         }
         
-        return [shortNameEmployees,longNameEmployees]
+        let thirdSegment = companyEmployees.filter{ (employee) -> Bool in
+            if let employeeType = employee.employeeInfo?.type {
+                return employeeType == employeeTypes[2]
+            }
+            
+            return false
+        }
+        
+        return [firstSegment, secondSegment, thirdSegment]
     }
     
     // MARK: - Create Employee
@@ -153,7 +158,7 @@ struct CoreDataManager {
                                  into: context) as! EmployeeInfo
         employeeInfo.birthday = birthday
         employeeInfo.type = employeeType
-        // set employee info
+
         employee.employeeInfo = employeeInfo
         
         do {

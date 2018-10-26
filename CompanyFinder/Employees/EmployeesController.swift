@@ -41,10 +41,16 @@ CreateEmployeeControllerDelegate {
         let label = IndentedLabel()
         label.backgroundColor = .lightBlue
         
+        /*
+          Figure out how to not hard code section numbers.
+          Base it off of how large employeeTypes is.
+        */
         if section == 0 {
-            label.text = "SHORT NAMES"
+            label.text = CreateEmployeeController.employeeTypes[0]
+        } else if section == 1 {
+            label.text = CreateEmployeeController.employeeTypes[1]
         } else {
-            label.text = "LONG NAMES"
+            label.text = CreateEmployeeController.employeeTypes[2]
         }
         
         label.textColor = .darkBlue

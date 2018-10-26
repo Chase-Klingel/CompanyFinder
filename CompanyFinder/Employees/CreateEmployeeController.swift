@@ -21,7 +21,8 @@ class CreateEmployeeController: UIViewController {
 
     var delegate: CreateEmployeeControllerDelegate?
     var company: Company?
-    
+    private(set) static var employeeTypes = ["Executive", "Hiring", "Staff"]
+
     // MARK: - UI Elements
 
     let nameLabel: UILabel =  {
@@ -54,9 +55,8 @@ class CreateEmployeeController: UIViewController {
         return textField
     }()
     
-    let employeeTypeSegmentedControl: UISegmentedControl = {
-        let types = ["Executive", "Senior Management", "Staff"]
-        let sc = UISegmentedControl(items: types)
+    lazy var employeeTypeSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl(items: CreateEmployeeController.employeeTypes)
         sc.translatesAutoresizingMaskIntoConstraints  = false
         sc.selectedSegmentIndex = 0
         sc.tintColor = .darkBlue
@@ -175,6 +175,10 @@ class CreateEmployeeController: UIViewController {
     
     private func anchorEmployeeTypeSegmentedControl() {
         view.addSubview(employeeTypeSegmentedControl)
-        employeeTypeSegmentedControl.anchor(top: birthLabel.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 0)
+        employeeTypeSegmentedControl.anchor(top: birthLabel.bottomAnchor,
+                                            leading: view.leadingAnchor, bottom: nil,
+                                            trailing: view.trailingAnchor, paddingTop: 0,
+                                            paddingLeft: 16, paddingBottom: 0, paddingRight: 16,
+                                            width: 0, height: 0)
     }
 }
