@@ -91,10 +91,12 @@ CreateEmployeeControllerDelegate {
         // find the array that matches current employee type and append employee
         for employeeTypeIndex in 0..<Constants.employeeTypes.count {
             if employeeType == Constants.employeeTypes[employeeTypeIndex] {
+                let row = employees[employeeTypeIndex].count
+                let insertionIndexPath = IndexPath(row: row, section: employeeTypeIndex)
                 employees[employeeTypeIndex].append(employee)
+                
+                tableView.insertRows(at: [insertionIndexPath], with: .middle)
             }
         }
-        
-        tableView.reloadData()
     }
 }

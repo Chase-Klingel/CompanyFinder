@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import UIKit
 
 struct CoreDataManager {
     static let shared = CoreDataManager()
