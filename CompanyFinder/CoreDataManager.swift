@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import UIKit
 
 struct CoreDataManager {
     static let shared = CoreDataManager()
@@ -100,35 +101,18 @@ struct CoreDataManager {
     // MARK: - Fetch Employees
     
     func fetchEmployees(company: Company) -> [[Employee?]] {
+        var allEmployees = [[Employee]]()
+        
         guard let companyEmployees = company.employees?.allObjects
             as? [Employee] else { return [[nil]] }
-
-        let employeeTypes = CreateEmployeeController.employeeTypes
-        let firstSegment = companyEmployees.filter { (employee) -> Bool in
-            if let employeeType = employee.employeeInfo?.type {
-                return employeeType == employeeTypes[0]
-            }
-            
-            return false
+        
+        Constants.employeeTypes.forEach { (employeeType) in
+            allEmployees.append(
+                companyEmployees.filter { $0.employeeInfo?.type == employeeType }
+            )
         }
         
-        let secondSegment = companyEmployees.filter{ (employee) -> Bool in
-            if let employeeType = employee.employeeInfo?.type {
-                return employeeType == employeeTypes[1]
-            }
-            
-            return false
-        }
-        
-        let thirdSegment = companyEmployees.filter{ (employee) -> Bool in
-            if let employeeType = employee.employeeInfo?.type {
-                return employeeType == employeeTypes[2]
-            }
-            
-            return false
-        }
-        
-        return [firstSegment, secondSegment, thirdSegment]
+        return allEmployees
     }
     
     // MARK: - Create Employee

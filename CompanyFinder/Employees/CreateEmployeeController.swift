@@ -21,7 +21,6 @@ class CreateEmployeeController: UIViewController {
 
     var delegate: CreateEmployeeControllerDelegate?
     var company: Company?
-    private(set) static var employeeTypes = ["Executive", "Hiring", "Staff"]
 
     // MARK: - UI Elements
 
@@ -56,7 +55,7 @@ class CreateEmployeeController: UIViewController {
     }()
     
     lazy var employeeTypeSegmentedControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: CreateEmployeeController.employeeTypes)
+        let sc = UISegmentedControl(items: Constants.employeeTypes)
         sc.translatesAutoresizingMaskIntoConstraints  = false
         sc.selectedSegmentIndex = 0
         sc.tintColor = .darkBlue

@@ -40,19 +40,8 @@ CreateEmployeeControllerDelegate {
                             viewForHeaderInSection section: Int) -> UIView? {
         let label = IndentedLabel()
         label.backgroundColor = .lightBlue
-        
-        /*
-          Figure out how to not hard code section numbers.
-          Base it off of how large employeeTypes is.
-        */
-        if section == 0 {
-            label.text = CreateEmployeeController.employeeTypes[0]
-        } else if section == 1 {
-            label.text = CreateEmployeeController.employeeTypes[1]
-        } else {
-            label.text = CreateEmployeeController.employeeTypes[2]
-        }
-        
+    
+        label.text = Constants.employeeTypes[section]
         label.textColor = .darkBlue
         label.font = UIFont.boldSystemFont(ofSize: 16)
         
@@ -96,14 +85,16 @@ CreateEmployeeControllerDelegate {
     // MARK: - Delegate Methods
     
     func didAddEmployee(employee: Employee) {
-        guard let employeeNameLength = employee.name?.count
+        guard let employeeType = employee.employeeInfo?.type
             else { return }
-        if employeeNameLength < 6 {
-            employees[0].append(employee)
-        } else {
-            employees[1].append(employee)
+        
+        // find the array that matches current employee type and append employee
+        for employeeTypeIndex in 0..<Constants.employeeTypes.count {
+            if employeeType == Constants.employeeTypes[employeeTypeIndex] {
+                employees[employeeTypeIndex].append(employee)
+            }
         }
-
+        
         tableView.reloadData()
     }
 }
