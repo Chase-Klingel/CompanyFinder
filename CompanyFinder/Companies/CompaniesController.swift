@@ -39,8 +39,8 @@ class CompaniesController: UITableViewController {
         navigationItem.leftBarButtonItems = [
             UIBarButtonItem(title: "Reset", style: .plain,
                             target: self, action: #selector(handleReset)),
-            UIBarButtonItem(title: "Create 20K Companies", style: .plain,
-                            target: self, action: #selector(handleBatchCreate))
+            UIBarButtonItem(title: "Do Updates", style: .plain,
+                            target: self, action: #selector(doUpdates))
         ]
     }
     
@@ -74,16 +74,62 @@ class CompaniesController: UITableViewController {
     
     @objc private func handleBatchCreate() {
         CoreDataManager.shared.persistentContainer.performBackgroundTask { (backgroundContext) in
-            (0...20_000).forEach({ (value) in
+            (0...5).forEach({ (value) in
                 let company = Company(context: backgroundContext)
                 company.name = String(value)
             })
             
             do {
                 try backgroundContext.save()
+                
+                DispatchQueue.main.async {
+                    self.companies =
+                        CoreDataManager.shared.fetchCompanies()
+                }
             } catch let err {
                 print("Failed to save companies:", err)
             }
+        }
+    }
+    
+    @objc private func doUpdates() {
+        DispatchQueue.global(qos: .background).async {
+            let mainThreadContext =
+                CoreDataManager.shared.persistentContainer.viewContext
+            
+            let privateChildContext =
+                NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            
+            privateChildContext.parent = mainThreadContext
+            
+            let request: NSFetchRequest<Company> = Company.fetchRequest()
+            request.fetchLimit = 1
+            
+            do {
+                let companies = try privateChildContext.fetch(request)
+                
+                companies.forEach({ (company) in
+                    company.name = "D: \(company.name ?? "")"
+                })
+                
+                try privateChildContext.save()
+                
+                // move back to main thread to save updates on main thread context
+                DispatchQueue.main.async {
+                    do {
+                        if (mainThreadContext.hasChanges) {
+                            try mainThreadContext.save()
+                        }
+                        
+                        self.tableView.reloadData()
+                    } catch let err {
+                        print("Failed to update companies:", err)
+                    }
+                }
+            } catch let err {
+                print("Failed to fetch companies:", err)
+            }
+            
         }
     }
 }
