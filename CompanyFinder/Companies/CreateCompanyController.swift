@@ -144,7 +144,7 @@ class CreateCompanyController: UIViewController,
         }
     }
     
-    // MARK: - Create/Update Company
+    // MARK: - Create Company
     
     private func createCompany() {
         var imageData: Data?
@@ -156,12 +156,20 @@ class CreateCompanyController: UIViewController,
             imageData = UIImageJPEGRepresentation(companyImage, 0.8)
         }
         
-        let tuple = CoreDataManager.shared
+        let companyOrError = CoreDataManager.shared
             .createCompany(companyName: companyName,
                          companyFounded: datePicker.date,
                          companyImageData: imageData!)
         
-        if let _ = tuple.1 {
+        let company: Company? = companyOrError.0
+        let error: Error? = companyOrError.1
+        
+        handleResultOfCreateCompany(company: company, error: error)
+    }
+    
+    private func handleResultOfCreateCompany(company: Company?,
+                                             error: Error?) {
+        if let _ = error {
             showAlert(title: "Failed to save company!",
                       message: """
                                 We apologize. Something went wrong
@@ -172,11 +180,12 @@ class CreateCompanyController: UIViewController,
         } else {
             dismiss(animated: true) {
                 // force unwrapping ok b/c can guarantee a value
-
-                self.delegate?.didAddCompany(company: tuple.0!)
+                self.delegate?.didAddCompany(company: company!)
             }
         }
     }
+    
+    // MARK: - Update Company
     
     private func updateCompany() {
         company?.name = nameTextField.text
@@ -187,10 +196,15 @@ class CreateCompanyController: UIViewController,
                 UIImageJPEGRepresentation(companyImage, 0.8)
         }
         
-        let err = CoreDataManager.shared
+        let error: Error? = CoreDataManager.shared
             .updateCompany()
         
-        if let _ = err {
+        handleResultOfUpdateCompany(company: company, error: error)
+    }
+    
+    private func handleResultOfUpdateCompany(company: Company?,
+                                             error: Error?) {
+        if let _ = error {
             showAlert(title: "Failed to update!",
                       message: """
                                 We apologize. Something went wrong

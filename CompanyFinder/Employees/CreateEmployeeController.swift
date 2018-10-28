@@ -139,8 +139,6 @@ class CreateEmployeeController: UIViewController {
         handleResultOfSaveAttempt(employee: employee, error: error)
     }
     
-    // MARK: - Handle Result Of Save Attempt
-    
     private func handleResultOfSaveAttempt(employee: Employee?, error: Error?) {
         if let _ = error {
             showAlert(title: "Failed to save Employee!",
