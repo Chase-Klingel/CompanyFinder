@@ -35,6 +35,13 @@ class CompaniesController: UITableViewController {
         navigationItem.leftBarButtonItem =
             UIBarButtonItem(title: "Reset", style: .plain,
                             target: self, action: #selector(handleReset))
+        
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(title: "Reset", style: .plain,
+                            target: self, action: #selector(handleReset)),
+            UIBarButtonItem(title: "Create 20K Companies", style: .plain,
+                            target: self, action: #selector(handleBatchCreate))
+        ]
     }
     
     // MARK: - Present Add Company Controller
@@ -61,6 +68,23 @@ class CompaniesController: UITableViewController {
         
         companies.removeAll()
         tableView.deleteRows(at: indexPathsToRemove, with: .left)
+    }
+    
+    // MARK: - Batch Create
+    
+    @objc private func handleBatchCreate() {
+        CoreDataManager.shared.persistentContainer.performBackgroundTask { (backgroundContext) in
+            (0...20_000).forEach({ (value) in
+                let company = Company(context: backgroundContext)
+                company.name = String(value)
+            })
+            
+            do {
+                try backgroundContext.save()
+            } catch let err {
+                print("Failed to save companies:", err)
+            }
+        }
     }
 }
 
