@@ -9,7 +9,7 @@
 import UIKit
 
 struct Constants {
-    static let employeeTypes = [
+    static private(set) var employeeTypes = [
         "Executive",
         "Senior Management",
         "Staff"
