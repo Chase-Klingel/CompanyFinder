@@ -82,6 +82,34 @@ class CreateEmployeeController: UIViewController {
         anchorEmployeeTypeSegmentedControl()
     }
     
+    // MARK: - Validation Helpers
+    
+    private func validateBirthdayIsNotNull(birthdayText: String) {
+        if birthdayText.isEmpty {
+            showAlert(title: "Empty Birthday",
+                      message: "Please enter a birthday.")
+            
+            return
+        }
+    }
+    
+    // MARK: - Format Birthday Date
+    
+    private func formatBirthday(birthdayText: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        
+        guard let birthDate = dateFormatter.date(from: birthdayText)
+            else {
+                showAlert(title: "Bad Date Format",
+                          message: "Please type date as mm/dd/yyyy.")
+                
+                return nil
+        }
+        
+        return birthDate
+    }
+
     // MARK: - Save Employee
     
     @objc private func handleSave() {        
@@ -89,35 +117,32 @@ class CreateEmployeeController: UIViewController {
         guard let emmployeeName = nameTextField.text else { return }
         guard let birthdayText = birthTextField.text else { return }
         
-        if birthdayText.isEmpty {
-            showAlert(title: "Empty Birthday",
-                           message: "Please enter a birthday.")
-            
-            return
-        }
+        validateBirthdayIsNotNull(birthdayText: birthdayText)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        guard let birthdayDate = dateFormatter.date(from: birthdayText)
-            else {
-                showAlert(title: "Bad Date Format",
-                      message: "Please type date as mm/dd/yyyy.")
-                                
-                return
-        }
+        guard let birthday = formatBirthday(birthdayText: birthdayText)
+            else { return }
         
         guard let employeeType = employeeTypeSegmentedControl
             .titleForSegment(at: employeeTypeSegmentedControl.selectedSegmentIndex)
             else { return }
         
-        let tuple =
+        let employeeOrError =
             CoreDataManager.shared
                 .createEmployee(employeeName: emmployeeName,
-                                birthday: birthdayDate,
+                                birthday: birthday,
                                 company: company,
                                 employeeType: employeeType)
         
-        if let _ = tuple.1 {
+        let employee: Employee? = employeeOrError.0
+        let error: Error? = employeeOrError.1
+        
+        handleResultOfSaveAttempt(employee: employee, error: error)
+    }
+    
+    // MARK: - Handle Result Of Save Attempt
+    
+    private func handleResultOfSaveAttempt(employee: Employee?, error: Error?) {
+        if let _ = error {
             showAlert(title: "Failed to save Employee!",
                       message: """
                                 We apologize. Something went wrong
@@ -128,8 +153,7 @@ class CreateEmployeeController: UIViewController {
         } else {
             dismiss(animated: true) {
                 // force unwrapping ok b/c can guarantee a value
-                
-                self.delegate?.didAddEmployee(employee: tuple.0!)
+                self.delegate?.didAddEmployee(employee: employee!)
             }
         }
     }

@@ -12,6 +12,7 @@ extension CompaniesController:
     CreateCompanyControllerDelegate {
     
     // MARK: - Add/Edit Company
+    
     func didEditCompany(company: Company) {
         guard let row = companies.index(of: company)
             else { return }
