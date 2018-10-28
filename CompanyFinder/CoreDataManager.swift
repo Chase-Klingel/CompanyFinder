@@ -47,10 +47,7 @@ struct CoreDataManager {
                      companyImageData: Data) -> (Company?, Error?) {
         let context = persistentContainer.viewContext
 
-        let company =
-            NSEntityDescription
-                .insertNewObject(forEntityName: "Company",
-                                 into: context) as! Company
+        let company = Company(context: context)
         
         company.setValue(companyName, forKey: "name")
         company.setValue(companyFounded, forKey: "founded")
@@ -107,7 +104,9 @@ struct CoreDataManager {
         
         Constants.employeeTypes.forEach { (employeeType) in
             allEmployees.append(
-                companyEmployees.filter { $0.employeeInfo?.type == employeeType }
+                companyEmployees.filter {
+                    $0.employeeInfo?.type == employeeType
+                }
             )
         }
         
@@ -124,21 +123,14 @@ struct CoreDataManager {
             
         let context = persistentContainer.viewContext
         
-        let employee =
-            NSEntityDescription
-                .insertNewObject(forEntityName: "Employee",
-                                 into: context) as! Employee
+        let employee = Employee(context: context)
         
-        // set employee name
         employee.setValue(employeeName, forKey: "name")
             
-        // set employee company
         employee.company = company
             
-        let employeeInfo =
-            NSEntityDescription
-                .insertNewObject(forEntityName: "EmployeeInfo",
-                                 into: context) as! EmployeeInfo
+        let employeeInfo = EmployeeInfo(context: context)
+
         employeeInfo.birthday = birthday
         employeeInfo.type = employeeType
 
