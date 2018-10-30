@@ -69,9 +69,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65465E452188277100DC60E8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				656422422173C7250070012A /* UIViewController+Helpers.swift */,
+				65D8E0F5216A7737002906AA /* UIColor+theme.swift */,
+				6528B9DF216A97190056B380 /* UIView+AutoLayout.swift */,
+				65642234217294DD0070012A /* UINavigationController+Style.swift */,
+				656422362172A3CD0070012A /* UIImageView+Style.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		6564223A2172E13D0070012A /* Companies */ = {
 			isa = PBXGroup;
 			children = (
+				656422442173C8790070012A /* Employees */,
 				65D8E0E52169CBF0002906AA /* CompaniesController.swift */,
 				6564223D2173B23B0070012A /* CompaniesController+UITableView.swift */,
 				656422382172DF570070012A /* CompanyCell.swift */,
@@ -82,13 +95,12 @@
 			path = Companies;
 			sourceTree = "<group>";
 		};
-		656422412173C7040070012A /* Helpers */ = {
+		656422412173C7040070012A /* Constants */ = {
 			isa = PBXGroup;
 			children = (
 				658AA02621851B4100DE0C48 /* Constants.swift */,
-				656422422173C7250070012A /* UIViewController+Helpers.swift */,
 			);
-			path = Helpers;
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		656422442173C8790070012A /* Employees */ = {
@@ -120,21 +132,17 @@
 		65D8E0E22169CBF0002906AA /* CompanyFinder */ = {
 			isa = PBXGroup;
 			children = (
-				656422442173C8790070012A /* Employees */,
-				656422412173C7040070012A /* Helpers */,
+				65465E452188277100DC60E8 /* Extensions */,
+				656422412173C7040070012A /* Constants */,
 				6564223A2172E13D0070012A /* Companies */,
 				659C9CA7216C41AA00388634 /* CompanyFinderModels.xcdatamodeld */,
-				65D8E0E32169CBF0002906AA /* AppDelegate.swift */,
 				6528B9DD216A8B5B0056B380 /* CustomNavigationController.swift */,
+				65D8E0E32169CBF0002906AA /* AppDelegate.swift */,
 				659C9CAA216C4FF700388634 /* CoreDataManager.swift */,
 				65D8E0E72169CBF0002906AA /* Main.storyboard */,
 				65D8E0EA2169CBF2002906AA /* Assets.xcassets */,
 				65D8E0EC2169CBF2002906AA /* LaunchScreen.storyboard */,
 				65D8E0EF2169CBF2002906AA /* Info.plist */,
-				65D8E0F5216A7737002906AA /* UIColor+theme.swift */,
-				6528B9DF216A97190056B380 /* UIView+AutoLayout.swift */,
-				65642234217294DD0070012A /* UINavigationController+Style.swift */,
-				656422362172A3CD0070012A /* UIImageView+Style.swift */,
 			);
 			path = CompanyFinder;
 			sourceTree = "<group>";
