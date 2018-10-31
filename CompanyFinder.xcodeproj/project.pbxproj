@@ -11,6 +11,7 @@
 		6528B9DE216A8B5B0056B380 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528B9DD216A8B5B0056B380 /* CustomNavigationController.swift */; };
 		6528B9E0216A97190056B380 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528B9DF216A97190056B380 /* UIView+AutoLayout.swift */; };
 		65465E432188101000DC60E8 /* CompaniesAutoUpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65465E422188101000DC60E8 /* CompaniesAutoUpdateController.swift */; };
+		65465E472189679D00DC60E8 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65465E462189679D00DC60E8 /* Service.swift */; };
 		65642235217294DD0070012A /* UINavigationController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65642234217294DD0070012A /* UINavigationController+Style.swift */; };
 		656422372172A3CD0070012A /* UIImageView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656422362172A3CD0070012A /* UIImageView+Style.swift */; };
 		656422392172DF570070012A /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656422382172DF570070012A /* CompanyCell.swift */; };
@@ -36,6 +37,7 @@
 		6528B9DD216A8B5B0056B380 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		6528B9DF216A97190056B380 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		65465E422188101000DC60E8 /* CompaniesAutoUpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesAutoUpdateController.swift; sourceTree = "<group>"; };
+		65465E462189679D00DC60E8 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		65642234217294DD0070012A /* UINavigationController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Style.swift"; sourceTree = "<group>"; };
 		656422362172A3CD0070012A /* UIImageView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Style.swift"; sourceTree = "<group>"; };
 		656422382172DF570070012A /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				6564223B2173B0BE0070012A /* CompaniesController+CreateCompany.swift */,
 				6528B9D9216A85A10056B380 /* CreateCompanyController.swift */,
 				65465E422188101000DC60E8 /* CompaniesAutoUpdateController.swift */,
+				65465E462189679D00DC60E8 /* Service.swift */,
 			);
 			path = Companies;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				659C9CA9216C41AA00388634 /* CompanyFinderModels.xcdatamodeld in Sources */,
 				6528B9DE216A8B5B0056B380 /* CustomNavigationController.swift in Sources */,
 				656422432173C7250070012A /* UIViewController+Helpers.swift in Sources */,
+				65465E472189679D00DC60E8 /* Service.swift in Sources */,
 				65642235217294DD0070012A /* UINavigationController+Style.swift in Sources */,
 				6564224A21777FBC0070012A /* EmployeesController+UITableView.swift in Sources */,
 			);

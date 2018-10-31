@@ -110,7 +110,6 @@ class CompaniesAutoUpdateController: UITableViewController,
     
     @objc private func handleDelete() {
         let fetchRequest: NSFetchRequest<Company> = Company.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name CONTAINS %@", "C")
         
         let context =
             CoreDataManager.shared.persistentContainer.viewContext
@@ -147,6 +146,8 @@ class CompaniesAutoUpdateController: UITableViewController,
         ]
             
         tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
+        
+        Service.shared.downloadCompaniesFromServer()
     }
     
     // MARK: - Table View Data Source
