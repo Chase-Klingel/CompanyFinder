@@ -146,11 +146,14 @@ class CompaniesAutoUpdateController: UITableViewController,
         ]
             
         tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
+        
         let refreshControl = UIRefreshControl()
         self.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         refreshControl.tintColor = .white
     }
+    
+    // MARK: - Download JSON
     
     @objc private func handleRefresh() {
         Service.shared.downloadCompaniesFromServer()
