@@ -146,8 +146,15 @@ class CompaniesAutoUpdateController: UITableViewController,
         ]
             
         tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
-        
+        let refreshControl = UIRefreshControl()
+        self.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        refreshControl.tintColor = .white
+    }
+    
+    @objc private func handleRefresh() {
         Service.shared.downloadCompaniesFromServer()
+        refreshControl?.endRefreshing()
     }
     
     // MARK: - Table View Data Source
@@ -176,6 +183,12 @@ class CompaniesAutoUpdateController: UITableViewController,
     override func tableView(_ tableView: UITableView,
                             heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let employeesListController = EmployeesController()
+        employeesListController.company = fetchedResultsController.object(at: indexPath)
+        navigationController?.pushViewController(employeesListController, animated: true)
     }
     
     // MARK: - Table View Section Style

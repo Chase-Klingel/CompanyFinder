@@ -21,7 +21,6 @@ extension EmployeesController {
     
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath)
         
@@ -29,7 +28,7 @@ extension EmployeesController {
             
         cell.backgroundColor = .tealColor
         cell.textLabel?.textColor = .white
-        
+
         if let birthday = employee.employeeInfo?.birthday {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMM dd, yyyy"

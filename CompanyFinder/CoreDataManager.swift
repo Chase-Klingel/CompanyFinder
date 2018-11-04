@@ -101,11 +101,12 @@ struct CoreDataManager {
         
         guard let companyEmployees = company.employees?.allObjects
             as? [Employee] else { return [[nil]] }
-        
+                
         Constants.employeeTypes.forEach { (employeeType) in
+            
             allEmployees.append(
                 companyEmployees.filter {
-                    $0.employeeInfo?.type == employeeType
+                    $0.type == employeeType
                 }
             )
         }
@@ -128,11 +129,11 @@ struct CoreDataManager {
         employee.setValue(employeeName, forKey: "name")
             
         employee.company = company
+        employee.type = employeeType
             
         let employeeInfo = EmployeeInfo(context: context)
 
         employeeInfo.birthday = birthday
-        employeeInfo.type = employeeType
 
         employee.employeeInfo = employeeInfo
         

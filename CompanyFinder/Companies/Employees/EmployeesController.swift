@@ -66,7 +66,7 @@ CreateEmployeeControllerDelegate {
         employees =
             CoreDataManager.shared.fetchEmployees(company: company)
             as! [[Employee]]
-        
+
         setupPlusButtonInNavBar(selector: #selector(handleAddEmployee))
     }
     
@@ -85,7 +85,7 @@ CreateEmployeeControllerDelegate {
     // MARK: - Delegate Methods
     
     func didAddEmployee(employee: Employee) {
-        guard let employeeType = employee.employeeInfo?.type
+        guard let employeeType = employee.type
             else { return }
         
         // find the array that matches current employee type and append employee
