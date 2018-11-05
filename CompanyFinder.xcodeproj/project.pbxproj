@@ -21,6 +21,8 @@
 		656422432173C7250070012A /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656422422173C7250070012A /* UIViewController+Helpers.swift */; };
 		656422462173C9AB0070012A /* CreateEmployeeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656422452173C9AB0070012A /* CreateEmployeeController.swift */; };
 		6564224A21777FBC0070012A /* EmployeesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6564224921777FBC0070012A /* EmployeesController+UITableView.swift */; };
+		6567C2BB218FFCBE0047C727 /* Modelv1.1_2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6567C2BA218FFCBE0047C727 /* Modelv1.1_2.xcmappingmodel */; };
+		6567C2BD218FFD840047C727 /* CustomMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567C2BC218FFD840047C727 /* CustomMigrationPolicy.swift */; };
 		658AA02721851B4100DE0C48 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658AA02621851B4100DE0C48 /* Constants.swift */; };
 		659C9CA9216C41AA00388634 /* CompanyFinderModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 659C9CA7216C41AA00388634 /* CompanyFinderModels.xcdatamodeld */; };
 		659C9CAB216C4FF700388634 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C9CAA216C4FF700388634 /* CoreDataManager.swift */; };
@@ -47,6 +49,9 @@
 		656422422173C7250070012A /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 		656422452173C9AB0070012A /* CreateEmployeeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeController.swift; sourceTree = "<group>"; };
 		6564224921777FBC0070012A /* EmployeesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmployeesController+UITableView.swift"; sourceTree = "<group>"; };
+		6567C2B9218FF92A0047C727 /* CompanyFinderModels_v1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompanyFinderModels_v1.2.xcdatamodel; sourceTree = "<group>"; };
+		6567C2BA218FFCBE0047C727 /* Modelv1.1_2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Modelv1.1_2.xcmappingmodel; sourceTree = "<group>"; };
+		6567C2BC218FFD840047C727 /* CustomMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMigrationPolicy.swift; sourceTree = "<group>"; };
 		658AA02621851B4100DE0C48 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		659C9CA8216C41AA00388634 /* CompanyFinderModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompanyFinderModels.xcdatamodel; sourceTree = "<group>"; };
 		659C9CAA216C4FF700388634 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -147,6 +152,8 @@
 				65D8E0EA2169CBF2002906AA /* Assets.xcassets */,
 				65D8E0EC2169CBF2002906AA /* LaunchScreen.storyboard */,
 				65D8E0EF2169CBF2002906AA /* Info.plist */,
+				6567C2BA218FFCBE0047C727 /* Modelv1.1_2.xcmappingmodel */,
+				6567C2BC218FFD840047C727 /* CustomMigrationPolicy.swift */,
 			);
 			path = CompanyFinder;
 			sourceTree = "<group>";
@@ -223,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D8E0F6216A7737002906AA /* UIColor+theme.swift in Sources */,
+				6567C2BB218FFCBE0047C727 /* Modelv1.1_2.xcmappingmodel in Sources */,
 				65D8E0E62169CBF0002906AA /* CompaniesController.swift in Sources */,
 				6528B9DA216A85A10056B380 /* CreateCompanyController.swift in Sources */,
 				656422462173C9AB0070012A /* CreateEmployeeController.swift in Sources */,
@@ -238,6 +246,7 @@
 				656422392172DF570070012A /* CompanyCell.swift in Sources */,
 				659C9CA9216C41AA00388634 /* CompanyFinderModels.xcdatamodeld in Sources */,
 				6528B9DE216A8B5B0056B380 /* CustomNavigationController.swift in Sources */,
+				6567C2BD218FFD840047C727 /* CustomMigrationPolicy.swift in Sources */,
 				656422432173C7250070012A /* UIViewController+Helpers.swift in Sources */,
 				65465E472189679D00DC60E8 /* Service.swift in Sources */,
 				65642235217294DD0070012A /* UINavigationController+Style.swift in Sources */,
@@ -444,10 +453,11 @@
 		659C9CA7216C41AA00388634 /* CompanyFinderModels.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6567C2B9218FF92A0047C727 /* CompanyFinderModels_v1.2.xcdatamodel */,
 				65C9CDC9218FD70B00C8A0B3 /* CompanyFinderModels_v1.1.xcdatamodel */,
 				659C9CA8216C41AA00388634 /* CompanyFinderModels.xcdatamodel */,
 			);
-			currentVersion = 65C9CDC9218FD70B00C8A0B3 /* CompanyFinderModels_v1.1.xcdatamodel */;
+			currentVersion = 6567C2B9218FF92A0047C727 /* CompanyFinderModels_v1.2.xcdatamodel */;
 			path = CompanyFinderModels.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -40,6 +40,8 @@ struct Service {
                 jsonCompanies.forEach({ (jsonCompany) in
                     let company = Company(context: privateContext)
                     company.name = jsonCompany.name
+                    company.numEmployees = "1"
+                    company.companyImage = Data()
                     
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM/dd/yyyy"
