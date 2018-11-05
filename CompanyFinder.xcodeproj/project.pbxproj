@@ -50,6 +50,7 @@
 		658AA02621851B4100DE0C48 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		659C9CA8216C41AA00388634 /* CompanyFinderModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompanyFinderModels.xcdatamodel; sourceTree = "<group>"; };
 		659C9CAA216C4FF700388634 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		65C9CDC9218FD70B00C8A0B3 /* CompanyFinderModels_v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompanyFinderModels_v1.1.xcdatamodel; sourceTree = "<group>"; };
 		65D8E0E02169CBF0002906AA /* CompanyFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompanyFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D8E0E32169CBF0002906AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65D8E0E52169CBF0002906AA /* CompaniesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesController.swift; sourceTree = "<group>"; };
@@ -443,9 +444,10 @@
 		659C9CA7216C41AA00388634 /* CompanyFinderModels.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				65C9CDC9218FD70B00C8A0B3 /* CompanyFinderModels_v1.1.xcdatamodel */,
 				659C9CA8216C41AA00388634 /* CompanyFinderModels.xcdatamodel */,
 			);
-			currentVersion = 659C9CA8216C41AA00388634 /* CompanyFinderModels.xcdatamodel */;
+			currentVersion = 65C9CDC9218FD70B00C8A0B3 /* CompanyFinderModels_v1.1.xcdatamodel */;
 			path = CompanyFinderModels.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

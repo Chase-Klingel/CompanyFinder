@@ -34,9 +34,9 @@ extension EmployeesController {
             dateFormatter.dateFormat = "MMM dd, yyyy"
             
             let birthdayStr = dateFormatter.string(from: birthday)
-            cell.textLabel?.text = "\(employee.name ?? "") \(birthdayStr)"
+            cell.textLabel?.text = "\(employee.fullName ?? "") \(birthdayStr)"
         } else {
-            cell.textLabel?.text = "\(employee.name ?? "")"
+            cell.textLabel?.text = "\(employee.fullName ?? "")"
         }
             
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
